@@ -1,11 +1,12 @@
-import AppCarousel from "../../components/Carousel"
+import Welcome from "./Welcome"
 import About from "../../components/about"
+import "./home.css";
 
 const Home = () => {
   return (
     <>
-      <AppCarousel />
-      <About />
+    <Welcome/>
+    <About/>
     </>
   )
 }

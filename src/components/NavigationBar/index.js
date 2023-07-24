@@ -21,8 +21,7 @@ function NavigationBar() {
         </Navbar.Collapse>
         </ul>
         <div class="col-md-3 text-end">
-        <button type="button" class="btn"><Nav.Link href="/daftar">Daftar</Nav.Link></button>
-        <button type="button" class="btn btn-outline-primary me-2"><Nav.Link href="/masuk">Masuk</Nav.Link></button>
+        <button type="button" class="btn btn-outline-primary me-2"><Nav.Link href="/login">Login</Nav.Link></button>
       </div>
       </Container>
     </Navbar>

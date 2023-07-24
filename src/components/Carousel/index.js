@@ -4,7 +4,7 @@ var heroData = [
   {
     id: 1,
     image: require('../../assets/images/img-hero1.jpg'),
-    title: 'The perfect design for your website',
+    title: 'Cara Mendaftar',
     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab suscipit dicta nulla. Consequuntur obcaecati officiis, labore doloribus non tempore impedit consequatur ab dolor. Explicabo quam repellendus vero omnis, nisi odio!',
     link: 'https://www.google.com'
   },
@@ -38,7 +38,7 @@ function AppCarousel() {
                     alt={"slide " + hero.id}
                   />
                   <Carousel.Caption>
-                    <h2>{hero.title}</h2>
+                    <h1>{hero.title}</h1>
                     <p>{hero.description}</p>
                     <a className="btn btn-primary" href={hero.link}>Learn More <i className="fas fa-chevron-right"></i></a>
                   </Carousel.Caption>             

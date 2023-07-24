@@ -6,26 +6,26 @@ const servicesData = [
   {
     id: 1,
     icon: 'fas fa-1',
-    title: 'Responsive Design',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis, vel! Accusantium hic fugiat laudantiu earum consequuntur, unde nam et mollitia eaque incidunt sed.'
+    title: 'Pendaftaran Terbuka',
+    description: 'TBC'
   },
   {
     id: 2,
     icon: 'fas fa-2',
-    title: 'Creative Design',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis, vel! Accusantium hic fugiat laudantiu earum consequuntur, unde nam et mollitia eaque incidunt sed.'
+    title: 'Penutupan Pendaftaran',
+    description: 'TBC'
   },
   {
     id: 3,
     icon: 'fas fa-3',
-    title: 'SEO Optimized',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis, vel! Accusantium hic fugiat laudantiu earum consequuntur, unde nam et mollitia eaque incidunt sed.'
+    title: 'Upload Dokumen dan Seleksi',
+    description: 'TBC'
   },
   {
     id: 4,
     icon: 'fas fa-4',
-    title: 'Retina Ready',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis, vel! Accusantium hic fugiat laudantiu earum consequuntur, unde nam et mollitia eaque incidunt sed.'
+    title: 'Pengumuman',
+    description: 'TBC'
   }
 ]
 
