@@ -24,13 +24,13 @@ export default function Register() {
           theme: "colored",
         });
       }
-      if (!form.confirmPass) {
+      if (!form.password) {
         toast("Please input password !", {
           type: "error",
           theme: "colored",
         });
       }
-      if (!form.confirmPass) {
+      if (form.password != form.confirmPass) {
         toast("Please input the same password !", {
           type: "error",
           theme: "colored",

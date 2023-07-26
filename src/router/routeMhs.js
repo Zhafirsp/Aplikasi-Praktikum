@@ -1,7 +1,6 @@
 import { Routes, Route} from 'react-router-dom'
 import HomeMahasiswa from '../pages/Home/mhs';
 import Civitas from '../pages/Civitas';
-import Lab from '../pages/Lab';
 import Mendaftar from '../pages/caraMendaftar';
 import NavMhs from '../components/NavigationBar/navMhs';
 import Pendaftaran from '../pages/pendaftaran';

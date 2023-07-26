@@ -14,8 +14,8 @@ export default function Uploader() {
   };
 
   const validateSelectedFile = () => {
-    const MIN_FILE_SIZE = 2048  // 1MB
-    const MAX_FILE_SIZE = 10240 // 5MB
+    const MIN_FILE_SIZE = 2048  // 2MB
+    const MAX_FILE_SIZE = 10240 // 10MB
 
     if (!selectedFile) {
       toast("Tolong pilih file terlebih dahulu !", {
@@ -29,7 +29,7 @@ export default function Uploader() {
     const fileSizeKiloBytes = selectedFile.size / 1024
 
     if(fileSizeKiloBytes < MIN_FILE_SIZE){
-      toast("File zip terlalu kecil !", {
+      toast("Zip file too small !", {
         type: "error",
         theme: "colored",
       });

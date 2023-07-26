@@ -22,16 +22,12 @@ function App() {
     <header id='header'>
       {/* <NavMhs/> */}
       </header>
-      <RouteMhs/>
-      {/* <RouteAdmin/> */}
+      {/* <RouteMhs/> */}
+      <RouteAdmin/>
       <Routes>
-        {/* <Route path='/Mahasiswa' element={<HomeMahasiswa/>}/>
-        <Route path='/lab' element={<Lab/>}/>
-        <Route path='/civitas' element={<Civitas/>}/>
-        <Route path='/mendaftar' element={<Mendaftar/>}/> */}
+        
         <Route exact path='/login' element={<Login/>}/>
-        {/* <Route exact path='/register' element={<Register/>}/>
-        <Route exact path='/pendaftaran' element={<Pendaftaran/>}/> */}
+        <Route exact path='/register' element={<Register/>}/>
       </Routes>
       <footer id="footer">
         <Footer/>
