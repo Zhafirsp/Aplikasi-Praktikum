@@ -1,8 +1,8 @@
 import Welcome from "./Welcome"
 import About from "../../components/about"
-import "./home.css";
+import "../../assets/styles/homeMhs.css";
 
-const Home = () => {
+const HomeMahasiswa = () => {
   return (
     <>
     <Welcome/>
@@ -11,4 +11,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default HomeMahasiswa

@@ -16,7 +16,7 @@ html {
 
 body {
   color: #333;
-  background: #fff;
+  background: #FAFAFA;
   font: 16px/1.6 "Rubik", sans-serif;
   min-width: 320px;
   margin-top: 50px;
@@ -451,7 +451,7 @@ textarea {
 
 #footer {
   background: #fff;
-  padding: 50px 0;
+  padding: 30px 0;
   color: #000000;
   text-align: center;
 }

@@ -3,7 +3,7 @@ import AppCarousel from "../../components/Carousel"
 import LiniMasa from "../../components/LiniMasa"
 import SyaratCalon from "../../components/SyaratCalon"
 
-const Mendaftar = () => {
+export default function Mendaftar () {
   return (
     <>
     <AppCarousel />
@@ -13,5 +13,3 @@ const Mendaftar = () => {
     </>
   )
 }
-
-export default Mendaftar

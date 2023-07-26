@@ -37,7 +37,7 @@ const alurPendaftaran = [
     }
 ]
 
-function Alur() {
+export default function Alur() {
 
   return (
     <section id="about" className="block about-block">
@@ -59,7 +59,7 @@ function Alur() {
             alurPendaftaran.map(alur => {
               return (
                 <Row sm={2} className='holder' key={alur.id}>
-                  <div className="icon">
+                  <div className="icon ms-5">
                     <i className={alur.icon}></i>
                   </div>
                   <h3 style={{ marginLeft:"-250px" }}>{alur.title}</h3>
@@ -74,5 +74,3 @@ function Alur() {
     </section>
   );
 }
-
-export default Alur;

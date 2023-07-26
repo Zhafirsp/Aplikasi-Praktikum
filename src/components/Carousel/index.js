@@ -1,52 +1,22 @@
-import Carousel from 'react-bootstrap/Carousel';
+import Image from 'react-bootstrap/Image';
+import img1 from '../../assets/images/img1.jpg';
 
 var heroData = [
   {
     id: 1,
     image: require('../../assets/images/img-hero1.jpg'),
     title: 'Cara Mendaftar',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab suscipit dicta nulla. Consequuntur obcaecati officiis, labore doloribus non tempore impedit consequatur ab dolor. Explicabo quam repellendus vero omnis, nisi odio!',
-    link: 'https://www.google.com'
-  },
-  {
-    id: 2,
-    image: require('../../assets/images/img-hero2.jpg'),
-    title: 'Start Your Future Financial Plan',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab suscipit dicta nulla. Consequuntur obcaecati officiis, labore doloribus non tempore impedit consequatur ab dolor. Explicabo quam repellendus vero omnis, nisi odio!',
-    link: 'https://www.facebook.com'
-  },
-  {
-    id: 3,
-    image: require('../../assets/images/img-hero3.jpg'),
-    title: 'Enjoy the Difference',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab suscipit dicta nulla. Consequuntur obcaecati officiis, labore doloribus non tempore impedit consequatur ab dolor. Explicabo quam repellendus vero omnis, nisi odio!',
-    link: 'https://www.twitter.com'
-  }
+   }
 ]
 
 function AppCarousel() {
   return (
-    <section id="home" className="hero-block">
-       <Carousel>
-          {
-            heroData.map(hero => {
-              return (
-                <Carousel.Item key={hero.id}>
-                  <img
-                    className="d-block w-100"
-                    src={hero.image}
-                    alt={"slide " + hero.id}
-                  />
-                  <Carousel.Caption>
-                    <h1>{hero.title}</h1>
-                    <p>{hero.description}</p>
-                    <a className="btn btn-primary" href={hero.link}>Learn More <i className="fas fa-chevron-right"></i></a>
-                  </Carousel.Caption>             
-                </Carousel.Item>
-              );
-            })
-          }
-      </Carousel>
+    <section id="home" className="hero-block" style={{ backgroundColor: "#063554" }}> 
+      <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-body-tertiary">
+    <div class="col-md-5 p-lg-5 mx-auto my-5">
+      <h1 class="display-3 fw-bolder text-white">Cara Mendaftar</h1>
+    </div>
+  </div>
     </section>
   );
 }

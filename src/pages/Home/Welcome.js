@@ -11,13 +11,13 @@ const Welcome = () => {
       <section className="header">
         <div className="container">
           <div className="row " id="welcomeH">
-            <div className="col-sm-12 col-md-5 polaroid-left" id="polaroid">
+            <div className="col-sm-12 col-md-6 col-lg-4 polaroid-left" id="polaroid">
               <Image src={img1} alt="header" />
               <p>LAB-TIF</p>
             </div>
-            <div className="col-sm-12 col-md-7" id="contentWH">
+            <div className="col-sm-12 col-md-6 col-lg-4" id="contentWH">
               <p id="headlineWH">
-              <span>Selamat datang di</span> <br />
+              <span>Selamat datang</span> <br />
                 <span>Website LAB-TIF</span>
               </p>
               <p className="pb-4" id="decsWH">
@@ -32,7 +32,7 @@ const Welcome = () => {
                 Daftar Sekarang
               </NavLink>
             </div>
-            <div className="col-sm-12 col-md-5 polaroid-right" id="polaroid">
+            <div className="col-sm-12 col-md-6 col-lg-4 polaroid-right" id="polaroid">
               <Image src={img1} alt="header" />
               <p>LAB-TIF</p>
             </div>

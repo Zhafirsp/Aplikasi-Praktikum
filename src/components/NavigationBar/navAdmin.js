@@ -1,61 +1,86 @@
+import React, { useState } from 'react';
+import * as FaIcons from 'react-icons/fa';
+import * as AiIcons from 'react-icons/ai';
+import * as Fa6Icons from 'react-icons/fa6';
+import * as RiIcons from 'react-icons/ri';
+import * as VscIcons from 'react-icons/vsc';
+import { Link } from 'react-router-dom';
+import '../../assets/styles/navAdmin.css';
+import { IconContext } from 'react-icons';
 
+const SidebarData = [
+  {
+    title: 'Beranda',
+    path: '/admin',
+    icon: <AiIcons.AiFillHome />,
+    cName: 'nav-text'
+  },
+  {
+    title: 'Data User',
+    path: '/user',
+    icon: <FaIcons.FaUsers />,
+    cName: 'nav-text'
+  },
+  {
+    title: 'Data Laboran',
+    path: '/laboran',
+    icon: <FaIcons.FaUserCog />,
+    cName: 'nav-text'
+  },
+  {
+    title: 'Data Asisten',
+    path: '/asisten',
+    icon: <FaIcons.FaUserTie />,
+    cName: 'nav-text'
+  },
+  {
+    title: 'Kehadiran Asisten',
+    path: '/kehadiran',
+    icon: <Fa6Icons.FaListCheck />,
+    cName: 'nav-text'
+  },
+  {
+    title: 'Validasi Data Pendaftaran',
+    path: '/validasi',
+    icon: <FaIcons.FaClipboardCheck />,
+    cName: 'nav-text'
+  }
+];
 
-function NavAdmin() {
+export default function NavAdmin() {
+  const [sidebar, setSidebar] = useState(false);
+
+  const showSidebar = () => setSidebar(!sidebar);
   return (
     <>
-      <div className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style="width: 280px;">
-        <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-          <svg className="bi pe-none me-2" width="40" height="32"></svg>
-          <span className="fs-4">Sidebar</span>
-        </a>
-      <ul className="nav nav-pills flex-column mb-auto">
-        <li className="nav-item">
-          <a href="/" className="nav-link active" aria-current="page">
-            <svg className="bi pe-none me-2" width="16" height="16"></svg>
-            Home
-          </a>
-        </li>
-        <li>
-          <a href="/" className="nav-link link-body-emphasis">
-            <svg className="bi pe-none me-2" width="16" height="16"></svg>
-            Dashboard
-          </a>
-        </li>
-        <li>
-          <a href="/" className="nav-link link-body-emphasis">
-            <svg className="bi pe-none me-2" width="16" height="16"></svg>
-            Orders
-          </a>
-        </li>
-        <li>
-          <a href="/" className="nav-link link-body-emphasis">
-            <svg className="bi pe-none me-2" width="16" height="16"></svg>
-            Products
-          </a>
-        </li>
-        <li>
-          <a href="/" className="nav-link link-body-emphasis">
-            <svg className="bi pe-none me-2" width="16" height="16"></svg>
-            Customers
-          </a>
-        </li>
-      </ul>
-      <div className="dropdown">
-        <a href="/" className="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-          <image src="https://github.com/mdo.png" alt="" width="32" height="32" className="rounded-circle me-2"/>
-          <strong>mdo</strong>
-        </a>
-        <ul className="dropdown-menu text-small shadow">
-          <li><a className="dropdown-item" href="/">New project...</a></li>
-          <li><a className="dropdown-item" href="/">Settings</a></li>
-          <li><a className="dropdown-item" href="/">Profile</a></li>
-          <li><hr className="dropdown-divider"/></li>
-          <li><a className="dropdown-item" href="/">Sign out</a></li>
-        </ul>
-      </div>
-    </div>
+    <IconContext.Provider value={{ color: '#000' }}>
+        <div className='navbar'>
+          <Link to='#' className='menu-bars'>
+            <FaIcons.FaBars onClick={showSidebar} />
+          </Link>
+        </div>
+        <IconContext.Provider value={{ color: '#fff' }}>
+        <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
+          <ul className='nav-menu-items' onClick={showSidebar}>
+            <li className='navbar-toggle'>
+              <Link to='#' className='menu-bars'>
+                <AiIcons.AiOutlineClose />
+              </Link>
+            </li>
+            {SidebarData.map((item, index) => {
+              return (
+                <li key={index} className={item.cName}>
+                  <Link to={item.path}>
+                    {item.icon}
+                    <span>{item.title}</span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      </IconContext.Provider>
+      </IconContext.Provider>
     </>
   );
 }
-
-export default NavAdmin;
