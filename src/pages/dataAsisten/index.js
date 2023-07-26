@@ -3,32 +3,28 @@ import NavLink from 'react-bootstrap/esm/NavLink';
 import {PiPencilSimpleBold} from 'react-icons/pi';
 import {BiTrashAlt} from 'react-icons/bi';
 
-export default function HomeAdmin () {
+export default function Asisten () {
   return (
     <>
     <section id="teams" className="block teams-block">
       <Container fluid>
         <div className="title-holder">
-          <h2 className='fw-bold'>JADWAL SEMESTER</h2>
+          <h2 className='fw-bold'>Daftar Asisten</h2>
           <hr/>
           <div className="subtitle">LAB TIF</div>
         </div>
         <table class="table table-bordered text-center" style={{ backgroundColor:"#063554", color:"white", borderRadius:"10px"}}>
           <thead>
             <tr>
-              <th className='text-center' colSpan={"11"}><h3 className='fw-bold'>Senin</h3></th>
+              <th className='text-center' colSpan={"7"}><h3 className='fw-bold'>Daftar Data User</h3></th>
             </tr>
             <tr>
               <th scope="col">No</th>
-              <th scope="col">Mulai</th>
-              <th scope="col">Selesai</th>
-              <th scope="col">Kode MK</th>
-              <th scope="col">Mata Kuliah</th>
-              <th scope="col">SKS</th>
-              <th scope="col">Kelas</th>
-              <th scope="col">Ruang</th>
-              <th scope="col">Dosen</th>
-              <th scope="col">Asisten</th>
+              <th scope="col">ID Asisten</th>
+              <th scope="col">NIM</th>
+              <th scope="col">Nama</th>
+              <th scope="col">Periode</th>
+              <th scope="col">Golongan</th>
               <th scope="col">Aksi</th>
             </tr>
           </thead>
@@ -40,10 +36,6 @@ export default function HomeAdmin () {
               <td>@mdo</td>
               <td>Mark</td>
               <td>Otto</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Mark</td>
-              <td>Otto</td>
               <td>
                 <button type="button" class="btn btn-warning mx-2 text-white"><PiPencilSimpleBold/></button>
                 <button type="button" class="btn btn-danger"><BiTrashAlt/></button>
@@ -51,15 +43,11 @@ export default function HomeAdmin () {
             </tr>
             <tr>
               <th scope="row">2</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Mark</td>
-              <td>Otto</td>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+              <td>Jacob</td>
+              <td>Thornton</td>
               <td>
                 <button type="button" class="btn btn-warning mx-2 text-white"><PiPencilSimpleBold/></button>
                 <button type="button" class="btn btn-danger"><BiTrashAlt/></button>
@@ -67,15 +55,11 @@ export default function HomeAdmin () {
             </tr>
             <tr>
               <th scope="row">3</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Mark</td>
-              <td>Otto</td>
+              <td>Larry the Bird</td>
+              <td>@twitter</td>
+              <td>@fat</td>
+              <td>Jacob</td>
+              <td>Thornton</td>
               <td>
                 <button type="button" class="btn btn-warning mx-2 text-white"><PiPencilSimpleBold/></button>
                 <button type="button" class="btn btn-danger"><BiTrashAlt/></button>
@@ -83,6 +67,13 @@ export default function HomeAdmin () {
             </tr>
           </tbody>
         </table>
+        <NavLink
+                href="/register"
+                className="btn btn-primary col-md-4 offset-md-8 mt-4"
+                id="btn-user"
+              >
+                Tambah Asisten
+              </NavLink>
         </Container>
     </section>
     </>

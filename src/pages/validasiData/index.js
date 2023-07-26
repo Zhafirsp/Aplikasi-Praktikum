@@ -2,29 +2,25 @@ import Container from 'react-bootstrap/Container';
 import NavLink from 'react-bootstrap/esm/NavLink';
 import {PiPencilSimpleBold} from 'react-icons/pi';
 import {BiTrashAlt} from 'react-icons/bi';
+import {AiOutlinePlus} from 'react-icons/ai'
 
-export default function User () {
+export default function Validasi () {
   return (
     <>
     <section id="teams" className="block teams-block">
       <Container fluid>
         <div className="title-holder">
-          <h2 className='fw-bold'>Daftar User</h2>
+          <h2 className='fw-bold'>Validasi Data Pendaftaran</h2>
           <hr/>
           <div className="subtitle">LAB TIF</div>
         </div>
         <table class="table table-bordered text-center" style={{ backgroundColor:"#063554", color:"white", borderRadius:"10px"}}>
           <thead>
             <tr>
-              <th className='text-center' colSpan={"7"}><h3 className='fw-bold'>Daftar Data User</h3></th>
-            </tr>
-            <tr>
               <th scope="col">No</th>
-              <th scope="col">Foto</th>
-              <th scope="col">Username</th>
-              <th scope="col">Role</th>
-              <th scope="col">No HP</th>
-              <th scope="col">Email</th>
+              <th scope="col">Judul</th>
+              <th scope="col">Deskripsi</th>
+              <th scope="col">Due Date</th>
               <th scope="col">Aksi</th>
             </tr>
           </thead>
@@ -33,36 +29,45 @@ export default function User () {
               <th scope="row">1</th>
               <td>Mark</td>
               <td>Otto</td>
-              <td>@mdo</td>
-              <td>Mark</td>
               <td>Otto</td>
               <td>
+                <button type="button" class="btn btn-secondary mx-2 text-white"><AiOutlinePlus/></button>
                 <button type="button" class="btn btn-warning mx-2 text-white"><PiPencilSimpleBold/></button>
                 <button type="button" class="btn btn-danger"><BiTrashAlt/></button>
               </td>
             </tr>
+          </tbody>
+        </table>
+
+        <table class="table table-bordered text-center" style={{ backgroundColor:"#063554", color:"white", borderRadius:"10px"}}>
+          <thead>
             <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>
-                <button type="button" class="btn btn-warning mx-2 text-white"><PiPencilSimpleBold/></button>
-                <button type="button" class="btn btn-danger"><BiTrashAlt/></button>
-              </td>
+              <th scope="col">No</th>
+              <th scope="col">NRP</th>
+              <th scope="col">Nama</th>
+              <th scope="col">Tgl</th>
+              <th scope="col">File</th>
+              <th scope="col">Status</th>
+              <th scope="col">Aksi</th>
             </tr>
+          </thead>
+          <tbody style={{ backgroundColor:"#fff", color:"black", borderRadius:"10px"}}>
             <tr>
-              <th scope="row">3</th>
-              <td>Larry the Bird</td>
-              <td>@twitter</td>
-              <td>@fat</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>Otto</td>
+              <td><button type="button" class="btn btn-primary my-1">Unduh</button></td>
+              <td>Otto</td>
               <td>
-                <button type="button" class="btn btn-warning mx-2 text-white"><PiPencilSimpleBold/></button>
-                <button type="button" class="btn btn-danger"><BiTrashAlt/></button>
+                  <NavLink
+                href="/status"
+                id="btn-status"
+              >
+                <button type="button" class="btn btn-warning mx-2 text-white">
+                <PiPencilSimpleBold/>
+              </button>
+              </NavLink>
               </td>
             </tr>
           </tbody>
@@ -72,7 +77,7 @@ export default function User () {
                 className="btn btn-primary col-md-4 offset-md-8 mt-4"
                 id="btn-user"
               >
-                Tambah User
+                Tambah Laboran
               </NavLink>
         </Container>
     </section>

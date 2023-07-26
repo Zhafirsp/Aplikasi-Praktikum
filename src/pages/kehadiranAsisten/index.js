@@ -1,9 +1,8 @@
 import Container from 'react-bootstrap/Container';
 import NavLink from 'react-bootstrap/esm/NavLink';
 import {PiPencilSimpleBold} from 'react-icons/pi';
-import {BiTrashAlt} from 'react-icons/bi';
 
-export default function HomeAdmin () {
+export default function Kehadiran () {
   return (
     <>
     <section id="teams" className="block teams-block">
@@ -45,8 +44,14 @@ export default function HomeAdmin () {
               <td>Mark</td>
               <td>Otto</td>
               <td>
-                <button type="button" class="btn btn-warning mx-2 text-white"><PiPencilSimpleBold/></button>
-                <button type="button" class="btn btn-danger"><BiTrashAlt/></button>
+                  <NavLink
+                href="/presensi"
+                id="btn-presensi"
+              >
+                <button type="button" class="btn btn-warning mx-2 text-white">
+                <PiPencilSimpleBold/>
+              </button>
+              </NavLink>
               </td>
             </tr>
             <tr>
@@ -61,8 +66,14 @@ export default function HomeAdmin () {
               <td>Mark</td>
               <td>Otto</td>
               <td>
-                <button type="button" class="btn btn-warning mx-2 text-white"><PiPencilSimpleBold/></button>
-                <button type="button" class="btn btn-danger"><BiTrashAlt/></button>
+                  <NavLink
+                href="/presensi"
+                id="btn-presensi"
+              >
+                <button type="button" class="btn btn-warning mx-2 text-white">
+                <PiPencilSimpleBold/>
+              </button>
+              </NavLink>
               </td>
             </tr>
             <tr>
@@ -77,12 +88,25 @@ export default function HomeAdmin () {
               <td>Mark</td>
               <td>Otto</td>
               <td>
-                <button type="button" class="btn btn-warning mx-2 text-white"><PiPencilSimpleBold/></button>
-                <button type="button" class="btn btn-danger"><BiTrashAlt/></button>
+                  <NavLink
+                href="/presensi"
+                id="btn-presensi"
+              >
+                <button type="button" class="btn btn-warning mx-2 text-white">
+                <PiPencilSimpleBold/>
+              </button>
+              </NavLink>
               </td>
             </tr>
           </tbody>
         </table>
+        <NavLink
+                href="/register"
+                className="btn btn-primary col-md-4 offset-md-8 mt-4"
+                id="btn-user"
+              >
+                Cetak Kehadiran
+              </NavLink>
         </Container>
     </section>
     </>

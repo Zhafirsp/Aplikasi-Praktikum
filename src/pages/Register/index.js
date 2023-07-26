@@ -30,7 +30,7 @@ export default function Register() {
           theme: "colored",
         });
       }
-      if (form.password != form.confirmPass) {
+      if (form.password !== form.confirmPass) {
         toast("Please input the same password !", {
           type: "error",
           theme: "colored",

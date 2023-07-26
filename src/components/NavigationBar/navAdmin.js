@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import * as FaIcons from 'react-icons/fa';
-import * as AiIcons from 'react-icons/ai';
 import * as Fa6Icons from 'react-icons/fa6';
-import * as RiIcons from 'react-icons/ri';
-import * as VscIcons from 'react-icons/vsc';
+import * as AiIcons from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import '../../assets/styles/navAdmin.css';
 import { IconContext } from 'react-icons';
