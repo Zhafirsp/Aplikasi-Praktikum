@@ -9,13 +9,6 @@ import Image from 'react-bootstrap/Image';
 import img1 from '../../assets/images/img1.jpg';
 
 export default function Login () {
-    // const [username, setUsername] = useState('');
-    // const [pass, setPass] = useState('');
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     console.log(username);
-    // }
 
     const [form, setForm] = useState({
         username: "",
@@ -36,10 +29,10 @@ export default function Login () {
             });
           }
           if (form.username && form.password) {
-            const { data } = await API().post("/auth/login", form);
+            const { data } = await API().post("v1/auth/login", form);
             if (data?.token) {
               localStorage.setItem("token", data?.token);
-              navigate.push("/mahasiswa");
+              navigate.push("/admin");
               // window.location.reload()
             }
           }
@@ -60,13 +53,40 @@ export default function Login () {
         <Col sm={6}>
             <h2 className="text-center fs-1 fw-semibold">LOGIN</h2>
             <form className="login-form">
-            <div class="mb-3">
-                <label for="username" class="form-label input" htmlFor="username">Username</label>
-                <input value={form?.username} onChange={(e) => setForm({...form,username: e.target?.value})} type="username" placeholder="NIP/NPM" class="form-control" id="username" name="username"/>
+            <div className="mb-3">
+                <label 
+                className="form-label input" 
+                htmlFor="username">
+                  Username
+                </label>
+
+                <input 
+                value={form?.username} 
+                onChange={(e) => 
+                setForm({...form,username: e.target?.value})} 
+                type="username" 
+                placeholder="NIP/NPM" 
+                className="form-control" 
+                id="username" 
+                name="username"/>
             </div>
-            <div class="mb-3">
-                <label for="password" class="form-label input" htmlFor="password">Password</label>
-                <input value={form?.password} onChange={(e) => setForm({...form,password: e.target?.value})} type="password" placeholder="********" class="form-control" id="password" name="password" />
+
+            <div className="mb-3">
+                <label 
+                className="form-label input" 
+                htmlFor="password">
+                  Password
+                </label>
+
+                <input 
+                value={form?.password} 
+                onChange={(e) => 
+                setForm({...form,password: e.target?.value})} 
+                type="password" 
+                placeholder="********" 
+                className="form-control" 
+                id="password" 
+                name="password" />
             </div>
             
             <button

@@ -1,5 +1,4 @@
 import React, { createContext, useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import { API } from "../config/api";
 
 const DataContext = createContext();
@@ -8,27 +7,109 @@ const DataProvider = ({ children }) => {
   // Users
   const [users, setUsers] = useState([]);
   const [userLogin, setUserLogin] = useState([]);
+  const [laboran, setLaboran] = useState([]);
+  const [asisten, setAsisten] = useState([]);
+  const [pendaftaran, setPendaftaran] = useState([]);
+  const { pathname } = useLocation();
 
   useEffect(() => {
     getUserLogin();
     getUsers();
+    getLaboran();
+    getAsisten();
+    getPendaftaran();
   }, []);
 
+  // Get data Profile
   const getUserLogin = async () => {
-    const { data } = await API().get("/profile");
+    const { data } = await API().get(`/v1/users/${id}`);
     setUserLogin(data?.dataUser);
   };
+
+  // Get all user
   const getUsers = async () => {
-    const { data: dataUser } = await API().get("/users");
+    const { data: dataUser } = await API().get("/v1/users");
     setUsers(dataUser?.users);
   };
 
+// Get all asisten
+  const getLaboran = async () => {
+    const { data: dataLaboran } = await API().get("/v1/laborans");
+    setLaboran(dataLaboran?.laboran);
+  };
+
+  // Get all laboran
+  const getAsisten = async () => {
+    const { data: dataAsisten } = await API().get("/v1/asistens");
+    setAsisten(dataAsisten?.asisten);
+  };
+
+  // Get all pendaftaran
+  const getPendaftaran = async () => {
+    const { data: dataPendaftaran } = await API().get("/v1/pendaftaran");
+    setPendaftaran(dataPendaftaran?.pendaftaran);
+  };
+
+  useEffect(async () => {
+    const arrPath = pathname?.split("/");
+    const newId = Number(arrPath[arrPath.length - 1]);
+    await getUserById(newId);
+    await getLaboranByNIP(newNIP);
+    await getAsistenById(newId);
+    await getPendaftaran();
+    await getPendaftaranByNIM(newNIM);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(async () => {
+    const arrPath = pathname?.split("/");
+    const newId = Number(arrPath[arrPath.length - 1]);
+
+    await getUserById(newId);
+    await getLaboranByNIP(newNIP);
+    await getAsistenById(newId);
+    await getPendaftaranByNIM(newNIM);
+  }, [pathname]);
+
+  const getUserById = async (id) => {
+    if (id) {
+      const { data: dataUsersId } = await API().get(`//v1/users/${id}`);
+      setUsers(dataUsersId.users);
+    }
+  };
+
+  const getLaboranByNIP = async (nip) => {
+    if (nip) {
+      const { data: dataLaboranNip } = await API().get(`//v1/laborans/${nip}`);
+      setLaboran(dataLaboranNip.laboran);
+    }
+  };
+
+  const getAsistenById = async (id) => {
+    if (id) {
+      const { data: dataAsistenId } = await API().get(`//v1/Asistens/${id}`);
+      setAsisten(dataAsistenId.asisten);
+    }
+  };
+
+  const getPendaftaranByNIM = async (nim) => {
+    if (nim) {
+      const { data: dataPendaftaranNim } = await API().get(`//v1/pendaftaran/${nim}`);
+      setPendaftaran(dataPendaftaranNim.pendaftaran);
+    }
+  };
+    
+    
   return (
     <>
       <DataContext.Provider
         value={{
           userLogin,
           users,
+          userNip,
+          laboran,
+          mahasiswa,
+          pendaftaran,
         }}
         >  
         {children}

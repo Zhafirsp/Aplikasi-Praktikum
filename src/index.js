@@ -6,6 +6,9 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import "react-toastify/dist/ReactToastify.css";
 import { DataProvider } from "./context/DataContext";
+import axios from 'axios';
+
+axios.defaults.withCredentials = true;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

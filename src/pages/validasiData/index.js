@@ -72,13 +72,6 @@ export default function Validasi () {
             </tr>
           </tbody>
         </table>
-        <NavLink
-                href="/register"
-                className="btn btn-primary col-md-4 offset-md-8 mt-4"
-                id="btn-user"
-              >
-                Tambah Laboran
-              </NavLink>
         </Container>
     </section>
     </>

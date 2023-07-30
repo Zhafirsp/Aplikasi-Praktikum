@@ -1,6 +1,5 @@
 import Container from 'react-bootstrap/Container';
 import NavLink from 'react-bootstrap/esm/NavLink';
-import {PiPencilSimpleBold} from 'react-icons/pi';
 
 export default function Presensi () {
   return (
