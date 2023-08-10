@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Routes, Route  } from 'react-router-dom';
 import "react-toastify/dist/ReactToastify.css";
-import { DataProvider } from "./context/DataContext";
+import { AuthProvider } from './context/AuthProfider';
 import axios from 'axios';
 
 axios.defaults.withCredentials = true;
@@ -14,9 +14,11 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-    <DataProvider>
-    <App />
-    </DataProvider>
+    <AuthProvider>
+    <Routes>
+          <Route path="/*" element={<App />} />
+        </Routes>
+    </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

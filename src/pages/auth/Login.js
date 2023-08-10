@@ -1,48 +1,71 @@
-import React, { useState } from "react";
+import { useRef, useState, useEffect } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import { ToastContainer, toast } from "react-toastify";
-import { API } from "../../config/api";
-import { useNavigate } from "react-router-dom";
+import useAuth from '../../hooks/useAuth';
+import axios from '../../api/axios';
+import { Link, useNavigate, useLocation  } from "react-router-dom";
 import Image from 'react-bootstrap/Image';
 import img1 from '../../assets/images/img1.jpg';
 
-export default function Login () {
+export default function Login ()  {
 
-    const [form, setForm] = useState({
-        username: "",
-        password: "",
-      });
-      const navigate = useNavigate();
-    
+  const { setAuth, persist, setPersist } = useAuth();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  const userRef = useRef();
+
+    const [user, setUser] = useState('');
+    const [pwd, setPwd] = useState('');
+  
+
       const onLogin = async () => {
         try {
-          if (!form.username) {
-            toast("Please input username !", {
-              type: "error",
-            });
-          }
-          if (!form.password) {
-            toast("Please input password !", {
-              type: "error",
-            });
-          }
-          if (form.username && form.password) {
-            const { data } = await API().post("v1/auth/login", form);
-            if (data?.token) {
-              localStorage.setItem("token", data?.token);
-              navigate.push("/admin");
-              // window.location.reload()
-            }
-          }
-        } catch (error) {
-          console.log(error.response);
-          toast(error?.response?.data?.error || "Internal Server Error", {
-            type: "error",
-          });
-        }
-      };
+          const response = await axios.post(`/v1/auth/login`,JSON.stringify({user, pwd}),
+          {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true
+        });
+        console.log(JSON.stringify(response?.data));
+        //console.log(JSON.stringify(response));
+        const accessToken = response?.data?.accessToken;
+        const role = response?.data?.role;
+        setAuth({ user, pwd, role, accessToken });
+        setUser('');
+        setPwd('');
+        navigate(from, { replace: true });
+    } catch (err) {
+      if (!err?.response) {
+        toast('No Server Response',{
+          type: "error",
+        })
+    } else if (err.response?.status === 400) {
+      toast('Missing Username or Password',{
+        type: "error",
+      })
+    } else if (err.response?.status === 401) {
+      toast('Unauthorized',{
+        type: "error",
+      })
+    } else {
+      toast('Login Failed',{
+        type: "error",
+      })
+    }
+}
+}
+
+const togglePersist = () => {
+  setPersist(prev => !prev);
+}
+
+useEffect(() => {
+  localStorage.setItem("persist", persist);
+}, [persist])
+
 
     return (
         <>
@@ -61,9 +84,10 @@ export default function Login () {
                 </label>
 
                 <input 
-                value={form?.username} 
+                ref={userRef}
+                value={user} 
                 onChange={(e) => 
-                setForm({...form,username: e.target?.value})} 
+                setUser(e.target.value)} 
                 type="username" 
                 placeholder="NIP/NPM" 
                 className="form-control" 
@@ -79,9 +103,9 @@ export default function Login () {
                 </label>
 
                 <input 
-                value={form?.password} 
+                value={pwd} 
                 onChange={(e) => 
-                setForm({...form,password: e.target?.value})} 
+                setPwd(e.target.value)} 
                 type="password" 
                 placeholder="********" 
                 className="form-control" 
@@ -97,6 +121,15 @@ export default function Login () {
               >
                 Login
               </button>
+              <div className="persistCheck">
+                    <input
+                        type="checkbox"
+                        id="persist"
+                        onChange={togglePersist}
+                        checked={persist}
+                    />
+                    <label htmlFor="persist">Trust This Device</label>
+                </div>
             <p className="mt-4 text-center">Belum memiliki akun? <span className="fw-bold">Hubungi Laboran TIF</span></p>
             </form>
         </Col>
@@ -109,4 +142,3 @@ export default function Login () {
         </>
     )
 }
-

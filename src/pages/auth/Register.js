@@ -1,19 +1,29 @@
-import React, { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import { ToastContainer, toast } from "react-toastify";
-import { API } from "../../config/api";
+import axios from '../../api/axios';
 import Image from 'react-bootstrap/Image';
 import img1 from '../../assets/images/img1.jpg';
 import { useNavigate } from "react-router-dom";
 
-export default function Register() {
+const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+
+const Register = () => {
+
+  const userRef = useRef();
+  const [success, setSuccess] = useState(false);
+
   const [form, setForm] = useState({
     username: "",
     password: "",
+    role: "",
     confirmPass: "",
   });
+
+
   const navigate = useNavigate();
 
   const onRegister = async () => {
@@ -37,7 +47,7 @@ export default function Register() {
         });
       }
       if (form.username && form.password && form.confirmPass ) {
-        const { data } = await API().post("/auth/register", form);
+        const { data } = await axios.post("/auth/register",JSON.stringify({form}));
         console.log(data);
         navigate.push("/login");
       }
@@ -74,27 +84,59 @@ export default function Register() {
             <form className="login-form">
             <div class="mb-3">
                 <label for="username" class="form-label input" htmlFor="username">Username</label>
-                <input value={form?.username} onChange={(e) => setForm({...form,username: e.target?.value})} type="username" placeholder="NIP/NPM" class="form-control" id="username" name="username"/>
+                <input 
+                value={form?.username} 
+                onChange={(e) => setForm({...form,username: e.target?.value})} 
+                type="username" 
+                placeholder="NIP/NPM" 
+                class="form-control" 
+                id="username" 
+                name="username"
+                />
             </div>
             <div class="row g-2">
             <div class="col-md">
               <div class="mb-3">
               <label for="password" class="form-label input" htmlFor="password">Password</label>
-              <input value={form?.password} onChange={(e) => setForm({...form,password: e.target?.value})} type="password" placeholder="********" class="form-control" id="password" name="password" />
+              <input 
+              value={form?.password} 
+              onChange={(e) => setForm({...form,password: e.target?.value})} 
+              type="password" 
+              placeholder="********" 
+              class="form-control" 
+              id="password" 
+              name="password" />
               </div>
             </div>
             <div class="col-md">
               <div class="mb-3">
                 <label for="confirm password" class="form-label input" htmlFor="confirm password"> Konfirmasi Password</label>
-                <input value={form?.confirmPass} onChange={(e) => setForm({...form,confirmPass: e.target?.value})} type="password" placeholder="********" class="form-control" id="confirm password" name="confirm password" />
+                <input 
+                value={form?.confirmPass} 
+                onChange={(e) => setForm({...form,confirmPass: e.target?.value})} 
+                type="password" 
+                placeholder="********" 
+                class="form-control" 
+                id="confirm password" 
+                name="confirm password" />
               </div>
             </div>
             </div>
             <label for="username" class="form-label input" htmlFor="username">Role</label>
             <select class="form-select" aria-label="Default select example">
-              <option value="1">Mahasiswa</option>
-              <option value="2">Asisten</option>
-              <option value="3">Laboran</option>
+              <option  
+                value={form?.role} 
+                onChange={(e) => setForm({...form,role: e.target?.value})} 
+                >Mahasiswa
+              </option>
+              <option value={form?.role} 
+                onChange={(e) => setForm({...form,role: e.target?.value})} 
+                >Asisten
+              </option>
+              <option value={form?.role} 
+                onChange={(e) => setForm({...form,role: e.target?.value})} 
+                >Laboran
+              </option>
             </select>
 
             <button
@@ -113,3 +155,5 @@ export default function Register() {
     </>
   )
 }
+
+export default Register;
