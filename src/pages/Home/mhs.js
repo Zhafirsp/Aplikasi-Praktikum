@@ -13,35 +13,33 @@ import { useNavigate } from "react-router-dom";
 import useLogout from "../../hooks/useLogout";
 
 
-const HomeMahasiswa = () => {
 
-  const navigate = useNavigate();
-    const logout = useLogout();
+export default function HomeMahasiswa () {
 
-    const signOut = async () => {
-        await logout();
-        navigate('/linkpage');
-    }
+  // const navigate = useNavigate();
+  //   const logout = useLogout();
+
+  //   const signOut = async () => {
+  //       await logout();
+  //       navigate('/login');
+  //   }
 
   return (
     <>
     <header id='header'>
       <NavMhs/>
       </header>
-      {checkLogin() ? null : <Login/>}
-      <About/>
+     {/* {checkLogin() ? null : <Login/>} */}
      <Routes>
         <Route path='/Mahasiswa' element={<Welcome/>}/>
-        <Route path='/pengumuman' element={<Pengumuman/>}/>
-        <Route path='/civitas' element={<Civitas/>}/>
-        <Route path='/mendaftar' element={<Mendaftar/>}/>
-        <Route exact path='/pendaftaran' element={<Pendaftaran/>}/>
-        <div className="flexGrow">
-                <button onClick={signOut}>Sign Out</button>
-            </div>
+        <Route path='/Pengumuman' element={<Pengumuman/>}/>
+        <Route path='/Civitas' element={<Civitas/>}/>
+        <Route path='/Mendaftar' element={<Mendaftar/>}/>
+        <Route path='/Pendaftaran' element={<Pendaftaran/>}/>
       </Routes>
+        {/* <div className="flexGrow">
+                <button onClick={signOut}>Sign Out</button>
+            </div> */}
     </>
   )
 }
-
-export default HomeMahasiswa

@@ -13,6 +13,7 @@ import React, { Component } from "react";
 import { useSelector, connect } from "react-redux";
 import NotFound from './pages/errors/NotFound';
 import RequireAuth from './components/RequireAuth';
+import Welcome from './pages/Home/Welcome';
 
 // const Authorization = (WrappedComponent, allowedRoles) => {
 //   class WithAuthorization extends Component {
@@ -59,18 +60,30 @@ import RequireAuth from './components/RequireAuth';
 //   return <h3>Anda tidak diizinkan mengakses halaman ini!</h3>;
 // };
 
-// const RoleAccess = ({ roles = [] }) => {
-//   const user = JSON.parse(localStorage.getItem("role"));
-//   return !roles.length || roles.includes(user?.role)
-//     ? <Outlet />
-//     : <Navigate to="/admin" replace />;
+// const getRole = () => {
+//   const role = JSON.parse(localStorage.getItem("role"));
+//   return role?.role;
 // };
 
-const ROLES = {
-  'Mahasiswa': 2001,
-  'Asisten': 1984,
-  'Admin': 5150
-}
+// const RoleAccess = ({ roles = [] }) => {
+//   const user = JSON.parse(getRole);
+//   return !roles.length || roles.includes(user?.role)
+//     ? <Outlet />
+//     : <Navigate to="/*" replace />;
+// };
+
+//   // const getUserById = async (id) => {
+//   //   if (id) {
+//   //     const { data: dataUsersId } = await API().get(`//v1/users/${id}`);
+//   //     setUsers(dataUsersId.users);
+//   //   }
+//   // };
+
+// const ROLES = {
+//   'Mahasiswa': 2001,
+//   'Asisten': 1984,
+//   'Admin': 5150
+// }
 
 function App() {
   return (
@@ -79,14 +92,15 @@ function App() {
     <header id='header'>
       </header>
       <Routes>
-      <Route path="login" element={<Login />}/>
-        <Route element={<RequireAuth allowedRoles={[ROLES.Mahasiswa]} />}>
-          <Route path="/mahasiswa" element={<HomeMahasiswa />} />
-        </Route>
-        <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
-          <Route path="/admin" element={<HomeAdmin />} />
-        </Route>
-        <Route path="*" element={<NotFound/>} />
+        <Route exact path="/" element={<Welcome />} />
+        <Route path="/login" element={<Login />}/>
+          {/* <Route element={<RequireAuth allowedRoles={["Mahasiswa"]} />}> */}
+            <Route path="/mahasiswa/*" element={<HomeMahasiswa />} />
+          {/* </Route> */}
+          {/* <Route element={<RequireAuth allowedRoles={["Admin"]} />}> */}
+            <Route path="/admin" element={<HomeAdmin />} />
+          {/* </Route> */}
+          <Route path="*" element={<NotFound/>} />
       </Routes>
       <footer id="footer">
         <Footer/>

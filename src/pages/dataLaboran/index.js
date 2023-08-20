@@ -3,7 +3,7 @@ import NavLink from 'react-bootstrap/esm/NavLink';
 import {PiPencilSimpleBold} from 'react-icons/pi';
 import {BiTrashAlt} from 'react-icons/bi';
 
-export default function Laboran () {
+export default function DataLaboran () {
   return (
     <>
     <section id="teams" className="block teams-block">

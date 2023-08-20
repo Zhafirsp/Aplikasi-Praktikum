@@ -4,7 +4,7 @@ import img1 from '../../assets/images/img5.jpg';
 import { NavLink } from "react-router-dom";
 
 
-const Welcome = () => {
+export default function Welcome () {
   return (
     <>
       {/* Header */}
@@ -42,5 +42,3 @@ const Welcome = () => {
     </>
   );
 }
-
-export default Welcome

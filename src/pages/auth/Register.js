@@ -8,9 +8,6 @@ import Image from 'react-bootstrap/Image';
 import img1 from '../../assets/images/img1.jpg';
 import { useNavigate } from "react-router-dom";
 
-const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-
 const Register = () => {
 
   const userRef = useRef();
@@ -47,9 +44,9 @@ const Register = () => {
         });
       }
       if (form.username && form.password && form.confirmPass ) {
-        const { data } = await axios.post("/auth/register",JSON.stringify({form}));
+        const { data } = await axios.post("v1/auth/register",JSON.stringify({form}));
         console.log(data);
-        navigate.push("/login");
+        navigate.push("/");
       }
     } catch (error) {
       console.log(error?.response?.data);
@@ -123,20 +120,15 @@ const Register = () => {
             </div>
             </div>
             <label for="username" class="form-label input" htmlFor="username">Role</label>
-            <select class="form-select" aria-label="Default select example">
-              <option  
-                value={form?.role} 
-                onChange={(e) => setForm({...form,role: e.target?.value})} 
-                >Mahasiswa
-              </option>
-              <option value={form?.role} 
-                onChange={(e) => setForm({...form,role: e.target?.value})} 
-                >Asisten
-              </option>
-              <option value={form?.role} 
-                onChange={(e) => setForm({...form,role: e.target?.value})} 
-                >Laboran
-              </option>
+            <select 
+            class="form-select" 
+            aria-label="Default select example" 
+            value={form?.role}
+            onChange={(e) => setForm({...form,role: e.target?.value})} 
+            >
+              <option  value="mahasiswa">Mahasiswa</option>
+              <option  value="asisten">Asisten</option>
+              <option  value="laboran">Laboran</option>
             </select>
 
             <button

@@ -9,7 +9,6 @@ export const axiosPrivate = () => {
   const token = localStorage.getItem("token") || "";
   const callAPI = axios.create({
     baseURL: REACT_APP_LABTIF_API_HOST,
-    withCredentials: false,
     headers: {
       Accept: "application/json",
       Authorization: `Bearer ${token}`,
