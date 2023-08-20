@@ -11,31 +11,34 @@ import img1 from '../../assets/images/img1.jpg';
 
 export default function Login ()  {
 
-  const { setAuth, persist, setPersist } = useAuth();
+  const { setAuth } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
   const userRef = useRef();
 
-    const [user, setUser] = useState('');
-    const [pwd, setPwd] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   
 
       const onLogin = async () => {
         try {
-          const response = await axios.post(`/v1/auth/login`,JSON.stringify({user, pwd}),
+          const response = await axios.post(`v1/auth/login`,
+          JSON.stringify({username, password}),
           {
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true
+            headers: { 
+              'Content-Type': 'application/json' 
+            },
+            credentials: "include", // Mengaktifkan kredensial (cookies)
         });
         console.log(JSON.stringify(response?.data));
         //console.log(JSON.stringify(response));
-        const accessToken = response?.data?.accessToken;
+        const access_token = response?.data?.access_token;
         const role = response?.data?.role;
-        setAuth({ user, pwd, role, accessToken });
-        setUser('');
-        setPwd('');
+        setAuth({ username, password, role, access_token });
+        setUsername('');
+        setPassword('');
         navigate(from, { replace: true });
     } catch (err) {
       if (!err?.response) {
@@ -43,7 +46,7 @@ export default function Login ()  {
           type: "error",
         })
     } else if (err.response?.status === 400) {
-      toast('Missing Username or Password',{
+      toast('Missingsername or Password',{
         type: "error",
       })
     } else if (err.response?.status === 401) {
@@ -54,18 +57,12 @@ export default function Login ()  {
       toast('Login Failed',{
         type: "error",
       })
+      console.log(err?.response.data);
+      console.log(err?.response.status);
+      console.log(err?.response.headers);
     }
 }
 }
-
-const togglePersist = () => {
-  setPersist(prev => !prev);
-}
-
-useEffect(() => {
-  localStorage.setItem("persist", persist);
-}, [persist])
-
 
     return (
         <>
@@ -85,9 +82,9 @@ useEffect(() => {
 
                 <input 
                 ref={userRef}
-                value={user} 
+                value={username} 
                 onChange={(e) => 
-                setUser(e.target.value)} 
+                setUsername(e.target.value)} 
                 type="username" 
                 placeholder="NIP/NPM" 
                 className="form-control" 
@@ -103,9 +100,9 @@ useEffect(() => {
                 </label>
 
                 <input 
-                value={pwd} 
+                value={password} 
                 onChange={(e) => 
-                setPwd(e.target.value)} 
+                setPassword(e.target.value)} 
                 type="password" 
                 placeholder="********" 
                 className="form-control" 
@@ -121,15 +118,6 @@ useEffect(() => {
               >
                 Login
               </button>
-              <div className="persistCheck">
-                    <input
-                        type="checkbox"
-                        id="persist"
-                        onChange={togglePersist}
-                        checked={persist}
-                    />
-                    <label htmlFor="persist">Trust This Device</label>
-                </div>
             <p className="mt-4 text-center">Belum memiliki akun? <span className="fw-bold">Hubungi Laboran TIF</span></p>
             </form>
         </Col>

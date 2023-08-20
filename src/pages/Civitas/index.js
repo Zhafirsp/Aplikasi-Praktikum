@@ -1,11 +1,10 @@
+import { PiFunctionLight } from "react-icons/pi"
 import Teams from "../../components/teams"
 
-const Civitas = () => {
+export default function Civitas () {
   return (
     <>
       <Teams />
     </>
   )
 }
-
-export default Civitas

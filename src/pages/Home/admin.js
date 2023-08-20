@@ -1,18 +1,18 @@
-import NavAdmin from '../../components/NavigationBar/navAdmin';
-import Jadwal from '../../components/table/jadwal';
-import checkLogin from "../../utils/checkLogin";
 import { Routes, Route} from 'react-router-dom'
-import User from '../../pages/dataUser';
-import Laboran from '../../pages/dataLaboran';
-import Asisten from '../../pages/dataAsisten';
-import Kehadiran from '../../pages/kehadiranAsisten';
-import Presensi from '../../pages/kehadiranAsisten/presensi';
-import Validasi from '../../pages/validasiData';
-import Status from '../../pages/validasiData/status';
-import Login from '../auth/Login';
-import Register from '../auth/Register';
 import { useNavigate } from "react-router-dom";
+import DataUser from '../dataUser';
+import DataLaboran from '../dataLaboran';
+import DataAsisten from '../dataAsisten';
+import Kehadiran from '../kehadiranAsisten';
+import Presensi from '../kehadiranAsisten/presensi';
+import Validasi from '../validasiData';
+import Status from '../validasiData/status';
+import Register from '../auth/Register';
+import Login from '../auth/Login';
+import NavAdmin from '../../components/NavigationBar/navAdmin';
 import useLogout from "../../hooks/useLogout";
+import checkLogin from "../../utils/checkLogin";
+import JadwalPraktikum from '../../components/table/jadwal';
 
 export default function HomeAdmin () {
 
@@ -21,7 +21,7 @@ export default function HomeAdmin () {
 
     const signOut = async () => {
         await logout();
-        navigate('/linkpage');
+        navigate('/login');
     }
 
   return (
@@ -31,19 +31,19 @@ export default function HomeAdmin () {
      </header>
      {checkLogin() ? null : <Login/>}
      <Routes>
-        <Route path='/admin' element={<Jadwal/>}/>
-        <Route path='/user' element={<User/>}/>
-        <Route path='/laboran' element={<Laboran/>}/>
-        <Route path='/asisten' element={<Asisten/>}/>
-        <Route path='/kehadiran' element={<Kehadiran/>}/>
-        <Route path='/presensi' element={<Presensi/>}/>
-        <Route path='/validasi' element={<Validasi/>}/>
-        <Route path='/status' element={<Status/>}/>
-        <Route path='/register' element={<Register/>}/>
-          <div className="flexGrow">
-                <button onClick={signOut}>Sign Out</button>
-            </div>
+        <Route exact path='/admin' element={<JadwalPraktikum/>}/>
+        <Route exact path='/user' element={<DataUser/>}/>
+        <Route exact path='/laboran' element={<DataLaboran/>}/>
+        <Route exact path='/asisten' element={<DataAsisten/>}/>
+        <Route exact path='/kehadiran' element={<Kehadiran/>}/>
+        <Route exact path='/presensi' element={<Presensi/>}/>
+        <Route exact path='/validasi' element={<Validasi/>}/>
+        <Route exact path='/status' element={<Status/>}/>
+        <Route exact path='/register' element={<Register/>}/>
       </Routes>
+          {/* <div className="flexGrow">
+                <button onClick={signOut}>Sign Out</button>
+            </div> */}
 
     </>
   )
