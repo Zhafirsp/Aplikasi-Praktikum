@@ -1,4 +1,4 @@
-import { Routes, Route} from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import { useNavigate } from "react-router-dom";
 import DataUser from '../dataUser';
 import DataLaboran from '../dataLaboran';
@@ -9,7 +9,7 @@ import Validasi from '../validasiData';
 import Status from '../validasiData/status';
 import Register from '../auth/Register';
 import Login from '../auth/Login';
-import NavAdmin from '../../components/NavigationBar/navAdmin';
+import NavAdmin from '../../components/NavigationBar/navLaboran';
 import useLogout from "../../hooks/useLogout";
 import checkLogin from "../../utils/checkLogin";
 import JadwalPraktikum from '../../components/table/jadwal';
@@ -24,14 +24,20 @@ export default function HomeAdmin () {
         navigate('/login');
     }
 
+  const location = useLocation();
+
+  const isLogin = location.pathname === "/login";
+
+
   return (
     <>
+{/* 
     <header id='header'>
      <NavAdmin/>
-     </header>
-     {checkLogin() ? null : <Login/>}
+     </header> */}
+     {!isLogin && <NavAdmin />}
      <Routes>
-        <Route exact path='/admin' element={<JadwalPraktikum/>}/>
+        <Route exact path='/laboran' element={<JadwalPraktikum/>}/>
         <Route exact path='/user' element={<DataUser/>}/>
         <Route exact path='/laboran' element={<DataLaboran/>}/>
         <Route exact path='/asisten' element={<DataAsisten/>}/>

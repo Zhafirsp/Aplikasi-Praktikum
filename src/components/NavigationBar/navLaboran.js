@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import '../../assets/styles/navAdmin.css';
 import { IconContext } from 'react-icons';
 
-const SidebarData = [
+const NavLaboranData = [
   {
     title: 'Beranda',
     path: '/admin',
@@ -45,7 +45,7 @@ const SidebarData = [
   }
 ];
 
-export default function NavAdmin() {
+export default function NavLaboran() {
   const [sidebar, setSidebar] = useState(false);
 
   const showSidebar = () => setSidebar(!sidebar);
@@ -65,7 +65,7 @@ export default function NavAdmin() {
                 <AiIcons.AiOutlineClose />
               </Link>
             </li>
-            {SidebarData.map((item, index) => {
+            {NavLaboranData.map((item, index) => {
               return (
                 <li key={index} className={item.cName}>
                   <Link to={item.path}>

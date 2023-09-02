@@ -4,16 +4,33 @@ import {
   Routes, 
   Route,
   Navigate,
-  Outlet } from 'react-router-dom'
+  Outlet, useLocation } from 'react-router-dom'
 import Footer from './components/footer';
 import Login from './pages/auth/Login';
 import HomeMahasiswa from './pages/Home/mhs';
-import HomeAdmin from './pages/Home/admin';
-import React, { Component } from "react";
-import { useSelector, connect } from "react-redux";
+import HomeAdmin from './pages/Home/laboran';
+import React, { Component, useEffect, useState } from "react";
+// import { useSelector, connect } from "react-redux";
 import NotFound from './pages/errors/NotFound';
 import RequireAuth from './components/RequireAuth';
 import Welcome from './pages/Home/Welcome';
+import Unauthorized from './components/Unauthorized';
+import Layout from './components/Layout';
+import axios from './api/axios';
+import Civitas from './pages/Civitas';
+import Mendaftar from './pages/caraMendaftar';
+import Pendaftaran from './pages/pendaftaran';
+import Pengumuman from './pages/pengumuman';
+import DataUser from './pages/dataUser';
+import DataLaboran from './pages/dataLaboran';
+import DataAsisten from './pages/dataAsisten';
+import Kehadiran from './pages/kehadiranAsisten';
+import Presensi from './pages/kehadiranAsisten/presensi';
+import Validasi from './pages/validasiData';
+import Status from './pages/validasiData/status';
+import Register from './pages/auth/Register';
+import JadwalPraktikum from './components/table/jadwal';
+import NavMhs from './components/NavigationBar/navMhs';
 
 // const Authorization = (WrappedComponent, allowedRoles) => {
 //   class WithAuthorization extends Component {
@@ -70,35 +87,71 @@ import Welcome from './pages/Home/Welcome';
 //   return !roles.length || roles.includes(user?.role)
 //     ? <Outlet />
 //     : <Navigate to="/*" replace />;
-// };
 
-//   // const getUserById = async (id) => {
-//   //   if (id) {
-//   //     const { data: dataUsersId } = await API().get(`//v1/users/${id}`);
-//   //     setUsers(dataUsersId.users);
-//   //   }
-//   // };
+// const [userRole, setUserRole] = useState('');
+//   const [isLogin, setIsLogin] = useState(false);
 
-// const ROLES = {
-//   'Mahasiswa': 2001,
-//   'Asisten': 1984,
-//   'Admin': 5150
-// }
+//   useEffect(() => {
+//     const getRole = async () => {
+//       try {
+//         const response = await axios.get(`v1/users`, {
+//           headers: {
+//             'Content-Type': 'application/json'
+//           },
+//           credentials: "include", // Mengaktifkan kredensial (cookies)
+//         });
+//         console.log(JSON.stringify(response?.data));
+//         const role = response?.data?.role;
+//         setUserRole(role);
+//         setIsLogin(true);
+//       } catch (err) {
+//           console.log('Error fetching user profile:', err); 
+//       }
+//     }
+//     getRole();
+//   }, []);
+
 
 function App() {
+  
+  const location = useLocation();
+
+  const isLogin = location.pathname === "/login";
+
+
   return (
     
     <div className="App">
     <header id='header'>
+      {!isLogin && <NavMhs />}
       </header>
       <Routes>
-        <Route exact path="/" element={<Welcome />} />
+
+        {/* Public Routes */}
+        <Route exact path="/" element={<Layout  />} />
         <Route path="/login" element={<Login />}/>
+        <Route path="unauthorized" element={<Unauthorized />} />
+
+        {/* Mahasiswa Routes */}
           {/* <Route element={<RequireAuth allowedRoles={["Mahasiswa"]} />}> */}
-            <Route path="/mahasiswa/*" element={<HomeMahasiswa />} />
+            <Route path='/mahasiswa' element={<Welcome/>}/>
+            <Route path='/pengumuman' element={<Pengumuman/>}/>
+            <Route path='/civitas' element={<Civitas/>}/>
+            <Route path='/mendaftar' element={<Mendaftar/>}/>
+            <Route path='/pendaftaran' element={<Pendaftaran/>}/>
           {/* </Route> */}
-          {/* <Route element={<RequireAuth allowedRoles={["Admin"]} />}> */}
-            <Route path="/admin" element={<HomeAdmin />} />
+
+          {/* Laboran Routes */}
+          {/* <Route element={<RequireAuth allowedRoles={["Laboran"]} />}> */}
+            <Route exact path='/laboran' element={<JadwalPraktikum/>}/>
+            <Route exact path='/user' element={<DataUser/>}/>
+            <Route exact path='/laboran' element={<DataLaboran/>}/>
+            <Route exact path='/asisten' element={<DataAsisten/>}/>
+            <Route exact path='/kehadiran' element={<Kehadiran/>}/>
+            <Route exact path='/presensi' element={<Presensi/>}/>
+            <Route exact path='/validasi' element={<Validasi/>}/>
+            <Route exact path='/status' element={<Status/>}/>
+            <Route exact path='/register' element={<Register/>}/>
           {/* </Route> */}
           <Route path="*" element={<NotFound/>} />
       </Routes>

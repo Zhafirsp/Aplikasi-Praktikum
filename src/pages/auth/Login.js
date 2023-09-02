@@ -16,6 +16,7 @@ export default function Login ()  {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
+
   const userRef = useRef();
 
   const [username, setUsername] = useState("");
@@ -46,7 +47,7 @@ export default function Login ()  {
           type: "error",
         })
     } else if (err.response?.status === 400) {
-      toast('Missingsername or Password',{
+      toast('Missing Username or Password',{
         type: "error",
       })
     } else if (err.response?.status === 401) {
@@ -57,9 +58,9 @@ export default function Login ()  {
       toast('Login Failed',{
         type: "error",
       })
-      console.log(err?.response.data);
-      console.log(err?.response.status);
-      console.log(err?.response.headers);
+      // console.log(err?.response.data);
+      // console.log(err?.response.status);
+      // console.log(err?.response.headers);
     }
 }
 }
