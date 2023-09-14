@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
 import Container from 'react-bootstrap/Container';
 import NavLink from 'react-bootstrap/esm/NavLink';
@@ -8,37 +8,37 @@ import {BiTrashAlt} from 'react-icons/bi';
 import React, { useContext } from "react";
 
 export default function DataUser () {
-//     const [users, setUsers] = useState();
-//     const axiosPrivate = useAxiosPrivate();
-//     const navigate = useNavigate();
-//     const location = useLocation();
-//   // const { dataUser: data } = useContext(DataContext);
+    const [users, setUsers] = useState();
+    const axiosPrivate = useAxiosPrivate();
+    const navigate = useNavigate();
+    const location = useLocation();
+    // const { dataUser: data } = useContext(DataContext);
 
   
-//   useEffect(() => {
-//     let isMounted = true;
-//     const controller = new AbortController();
+  useEffect(() => {
+    let isMounted = true;
+    const controller = new AbortController();
 
-//     const getUsers = async () => {
-//         try {
-//             const response = await axiosPrivate.get('/v1/users', {
-//                 signal: controller.signal
-//             });
-//             console.log(response.data);
-//             isMounted && setUsers(response.data);
-//         } catch (err) {
-//             console.error(err);
-//             navigate('/login', { state: { from: location }, replace: true });
-//         }
-//     }
+    const getUsers = async () => {
+        try {
+            const response = await axiosPrivate.get('/v1/users', {
+                signal: controller.signal
+            });
+            console.log(response.data);
+            isMounted && setUsers(response.data);
+        } catch (err) {
+            console.error(err);
+            navigate('/login', { state: { from: location }, replace: true });
+        }
+    }
 
-//     getUsers();
+    getUsers();
 
-//     return () => {
-//         isMounted = false;
-//         controller.abort();
-//     }
-// }, [])
+    return () => {
+        isMounted = false;
+        controller.abort();
+    }
+}, [])
 
   return (
     <>
@@ -64,18 +64,18 @@ export default function DataUser () {
             </tr>
           </thead>
           <tbody style={{ backgroundColor:"#fff", color:"black", borderRadius:"10px"}}>
-          {/* {users?.length
-          ? ( */}
+          {users?.length
+          ? (
             <tr>
-              {/* {users.map((user, i) => 
-                  <td key={i}>{user?.username}</td>)} */}
+              {users.map((user, i) => 
+                  <td key={i}>{user?.username}</td>)}
                   <td>
                   <button type="button" className="btn btn-warning mx-2 text-white"><PiPencilSimpleBold/></button>
                   <button type="button" className="btn btn-danger"><BiTrashAlt/></button>
               </td>
             </tr>
-                {/* ): <p>No users to display</p>
-              } */}
+                 ): <p>No users to display</p>
+              }
             <tr>
               <th scope="row">2</th>
               <td>Jacob</td>

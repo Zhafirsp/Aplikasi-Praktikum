@@ -1,4 +1,4 @@
-import sertifikat from "../assets/images/img1"
+import sertifikat from "../assets/images/img1.jpg"
 
 export default function Sertifikat() {
   return (

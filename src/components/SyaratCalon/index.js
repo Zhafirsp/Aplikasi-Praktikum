@@ -7,17 +7,17 @@ const syaratUmum = [
   {
     id: 1,
     icon: 'fas fa-1',
-    title: 'Responsive Design',
+    title: 'Mahasiswa Teknik Informatika',
   },
   {
     id: 2,
     icon: 'fas fa-2',
-    title: 'Creative Design',
+    title: 'Memiliki kemauan untuk belajar dan mengajar',
   },
   {
     id: 3,
     icon: 'fas fa-3',
-    title: 'SEO Optimized',
+    title: 'Memiliki salah satu bidang yang dikuasai dalam bidang Teknik Informatika',
   }
 ]
 

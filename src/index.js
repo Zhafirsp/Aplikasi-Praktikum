@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route  } from 'react-router-dom';
 import "react-toastify/dist/ReactToastify.css";
-import { AuthProvider } from './context/AuthProfider';
+import { DataProvider } from './context/DataContext';
 import axios from 'axios';
 
 axios.defaults.withCredentials = true;
@@ -14,9 +14,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-    <AuthProvider>
+      <DataProvider>
       <App />
-    </AuthProvider>
+      </DataProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

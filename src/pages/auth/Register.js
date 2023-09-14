@@ -3,7 +3,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import { ToastContainer, toast } from "react-toastify";
-import axios from '../../api/axios';
+import {API} from '../../api/axios';
 import Image from 'react-bootstrap/Image';
 import img1 from '../../assets/images/img1.jpg';
 import { useNavigate } from "react-router-dom";
@@ -44,7 +44,7 @@ const Register = () => {
         });
       }
       if (form.username && form.password && form.confirmPass ) {
-        const { data } = await axios.post("v1/auth/register",JSON.stringify({form}));
+        const { data } = await API().post("v1/auth/register",JSON.stringify({form}));
         console.log(data);
         navigate.push("/");
       }

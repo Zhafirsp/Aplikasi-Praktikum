@@ -8,32 +8,32 @@ const alurPendaftaran = [
   {
     id: 1,
     icon: 'fas fa-1',
-    title: 'Responsive Design',
+    title: 'Pengumuman lowongan asisten',
   },
   {
     id: 2,
     icon: 'fas fa-2',
-    title: 'Creative Design',
+    title: 'Pendaftaran calon asisten',
   },
   {
     id: 3,
     icon: 'fas fa-3',
-    title: 'SEO Optimized',
+    title: 'Mengumpulkan persyaratan dokumen',
   },
   {
     id: 4,
     icon: 'fas fa-4',
-    title: 'Retina Ready',
+    title: 'Seleksi dan wawancara',
     },
   {
     id: 5,
     icon: 'fas fa-5',
-    title: 'Brower Compatibility',
+    title: 'Pemberitahuan hasil seleksi',
     },
   {
     id: 6,
     icon: 'fas fa-6',
-    title: 'Customer Support',
+    title: 'Penugasan asisten',
     }
 ]
 

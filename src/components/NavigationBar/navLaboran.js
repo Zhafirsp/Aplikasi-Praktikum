@@ -1,33 +1,43 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import * as FaIcons from 'react-icons/fa';
 import * as Fa6Icons from 'react-icons/fa6';
 import * as AiIcons from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import '../../assets/styles/navAdmin.css';
 import { IconContext } from 'react-icons';
+import { useNavigate, NavLink, useLocation  } from "react-router-dom";
+import useLogout from "../../hooks/useLogout";
+import { DataContext } from '../../context/DataContext';
+import checkLogin from "../../utils/checkLogin";
+import { MdOutlineEdit as Edit, MdLogout as LogOut } from "react-icons/md";
+import Avatar from "react-avatar";
+import Logout from "../modal/Logout";
+import Login from '../../pages/auth/Login';
 
+
+export default function NavLaboran() {
 const NavLaboranData = [
   {
     title: 'Beranda',
-    path: '/admin',
+    path: '/laboran',
     icon: <AiIcons.AiFillHome />,
     cName: 'nav-text'
   },
   {
     title: 'Data User',
-    path: '/user',
+    path: '/data-user',
     icon: <FaIcons.FaUsers />,
     cName: 'nav-text'
   },
   {
     title: 'Data Laboran',
-    path: '/laboran',
+    path: '/data-laboran',
     icon: <FaIcons.FaUserCog />,
     cName: 'nav-text'
   },
   {
     title: 'Data Asisten',
-    path: '/asisten',
+    path: '/data-asisten',
     icon: <FaIcons.FaUserTie />,
     cName: 'nav-text'
   },
@@ -42,10 +52,23 @@ const NavLaboranData = [
     path: '/validasi',
     icon: <FaIcons.FaClipboardCheck />,
     cName: 'nav-text'
+  },
+  {
+    title: 'Log Out',
+    onClick:{Logout},
+    icon: <FaIcons.FaClipboardCheck />,
+    cName: 'nav-text'
   }
 ];
+  
+  const navigate = useNavigate();
+  const logout = useLogout();
 
-export default function NavLaboran() {
+  const signout = async () => {
+      await logout();
+      navigate('/login');
+  }
+
   const [sidebar, setSidebar] = useState(false);
 
   const showSidebar = () => setSidebar(!sidebar);
@@ -75,7 +98,8 @@ export default function NavLaboran() {
                 </li>
               );
             })}
-          </ul>
+            </ul>
+            
         </nav>
       </IconContext.Provider>
       </IconContext.Provider>

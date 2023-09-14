@@ -6,13 +6,13 @@ export default function Pengumuman () {
     <section id="teams" className="block teams-block">
       <Container fluid>
         <div className="title-holder">
-          <h3 className='fs-4 fw-normal mt-5'>SELAMAT UNTUK CALON ASISTEN</h3>
+          <h3 className='fs-3 fw-normal mt-5' style={{ letterSpacing:"7px" }}>SELAMAT UNTUK CALON ASISTEN</h3>
           <h1 className='fs-1 fw-bold mt-3'>LAB - TIF</h1>
-          <h3 className='fs-4 fw-normal'>YANG TELAH LOLOS SELEKSI</h3>
+          <h3 className='fs-3 fw-normal' style={{ letterSpacing:"7px" }}>YANG TELAH LOLOS SELEKSI</h3>
           <hr/>
           <div className="subtitle">Untuk daftar calon asisten LAB-TIF yang lolos bisa dilihat langsung disini</div>
         </div>
-        <table class="table text-center" style={{ backgroundColor:"#063554", color:"white", borderRadius:"10px"}}>
+        <table class="table table-bordered text-center" style={{ backgroundColor:"#063554", color:"white", borderRadius:"10px"}}>
           <thead>
             <tr className='fs-2 fw-bold'>
               <th scope="col">No</th>

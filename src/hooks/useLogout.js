@@ -1,4 +1,4 @@
-import axios from "../api/axios";
+import {API} from "../api/axios";
 import useAuth from "./useAuth";
 
 const useLogout = () => {
@@ -7,7 +7,8 @@ const useLogout = () => {
     const logout = async () => {
         setAuth({});
         try {
-            const response = await axios('v1/auth/logout', {
+            const response = await API()('v1/auth/logout', {
+                credentials: "include",
                 withCredentials: true
             });
         } catch (err) {

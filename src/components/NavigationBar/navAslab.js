@@ -11,7 +11,7 @@ import { MdOutlineEdit as Edit, MdLogout as LogOut } from "react-icons/md";
 import Avatar from "react-avatar";
 import Logout from "../modal/Logout";
 
-export default function NavMhs() {
+export default function NavAslab() {
 
   //logout
     // const logout = useLogout();
@@ -46,11 +46,9 @@ export default function NavMhs() {
         <ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/mahasiswa">Home</Nav.Link>
-            <Nav.Link href="/civitas">Civitas</Nav.Link>
-            <Nav.Link href="/mendaftar">Cara Mendaftar</Nav.Link>
-            <Nav.Link href="/pendaftaran">Pendaftaran</Nav.Link>
-            <Nav.Link href="/pengumuman">Pengumuman</Nav.Link>
+            <Nav.Link href="/aslab">Home</Nav.Link>
+            <Nav.Link href="/penilaian">Penilaian</Nav.Link>
+            <Nav.Link href="/sertifikat">Sertifikat</Nav.Link>
           </Nav>
         </Navbar.Collapse>
         </ul>

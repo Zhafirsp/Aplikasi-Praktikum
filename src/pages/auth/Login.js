@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import { ToastContainer, toast } from "react-toastify";
 import useAuth from '../../hooks/useAuth';
-import axios from '../../api/axios';
+import {API} from '../../api/axios';
 import { Link, useNavigate, useLocation  } from "react-router-dom";
 import Image from 'react-bootstrap/Image';
 import img1 from '../../assets/images/img1.jpg';
@@ -25,7 +25,7 @@ export default function Login ()  {
 
       const onLogin = async () => {
         try {
-          const response = await axios.post(`v1/auth/login`,
+          const response = await API().post(`v1/auth/login`,
           JSON.stringify({username, password}),
           {
             headers: { 
@@ -41,7 +41,14 @@ export default function Login ()  {
         setUsername('');
         setPassword('');
         navigate(from, { replace: true });
-    } catch (err) {
+        // if (response?.data?.role === "Mahasiswa") {
+        //   navigate('/mahasiswa');
+        // } else if (response?.data?.role === "Laboran") {
+        //   navigate('/laboran');
+        // } else if (response?.data?.role === "Asisten") {
+        //   navigate('/aslab');
+        // }
+      } catch (err) {
       if (!err?.response) {
         toast('No Server Response',{
           type: "error",

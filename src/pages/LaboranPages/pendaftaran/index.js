@@ -1,28 +1,28 @@
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Uploader from '../../components/uploader';
-import '../../assets/styles/pendaftaran.css'
+import Uploader from '../../../components/uploader';
+import '../../../assets/styles/pendaftaran.css'
 
 const liniMasaData = [
   {
     id: 1,
     icon: 'fas fa-1',
-    title: 'Pendaftaran Terbuka',
+    title: 'Transkrip nilai terbaru',
   },
   {
     id: 2,
     icon: 'fas fa-2',
-    title: 'Penutupan Pendaftaran',
+    title: 'CV atau resume terbaru',
   },
   {
     id: 3,
     icon: 'fas fa-3',
-    title: 'Upload Dokumen dan Seleksi',
+    title: 'Surat motivasi',
   },
   {
     id: 4,
     icon: 'fas fa-4',
-    title: 'Pengumuman',
+    title: 'Kartu tanda mahasiswa (KTM)',
   }
 ]
 
@@ -31,14 +31,14 @@ export default function Pendaftaran() {
     <section id="pendaftaran" className="block services-block">
       <Container fluid>
         <div className="title-holder mt-5">
-          <h2>SYARAT PENDAFTARAN MELALUI WEB LAB - TIF</h2>
+          <h1 className='fw-bold' style={{ letterSpacing:"7px" }}>SYARAT DOKUMEN YANG DIPERLUKAN</h1>
           <div className="subtitle">LAB TIF</div>
         </div>
           {
             liniMasaData.map(liniMasa => {
               return (
                 <Row className='holder' key={liniMasa.id}>
-                  <div className='icon-pendaftaran'>
+                  <div className='icon-pendaftaran' style={{ marginTop:"-60px"}}>
                     <i className={liniMasa.icon} style={{ marginLeft:"250px", marginTop:"60px"}}></i>
                   </div>
                   <h3 className='text-center'>{liniMasa.title}</h3>
