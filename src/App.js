@@ -1,50 +1,52 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
-import {
-  Routes,
-  Route,
-  Navigate,
-  Outlet,
-  useLocation,
-} from 'react-router-dom'
-import React, { Component, useEffect, useState, } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+import { Routes, Route, Navigate, Outlet, useLocation } from "react-router-dom";
+import React, { Component, useEffect, useState, useMemo } from "react";
 // import { useSelector, connect } from "react-redux";
-import { API } from './api/axios';
+import { API } from "./api/axios";
 import { useJwt } from "react-jwt";
-import Login from './pages/auth/Login';
-import HomeMahasiswa from './pages/Home/mhs';
-import HomeAdmin from './pages/Home/laboran';
-import NotFound from './pages/errors/NotFound';
-import RequireAuth from './components/RequireAuth';
-import Welcome from './pages/Home/Welcome';
-import Unauthorized from './components/Unauthorized';
-import Layout from './components/Layout';
-import Civitas from './pages/MahasiswaPages/Civitas';
-import Mendaftar from './pages/MahasiswaPages/caraMendaftar';
-import Pendaftaran from './pages/LaboranPages/pendaftaran';
-import Pengumuman from './pages/MahasiswaPages/pengumuman';
-import DataUser from './pages/LaboranPages/dataUser';
-import DataLaboran from './pages/LaboranPages/dataLaboran';
-import DataAsisten from './pages/LaboranPages/dataAsisten';
-import Kehadiran from './pages/LaboranPages/kehadiranAsisten';
-import Presensi from './pages/LaboranPages/kehadiranAsisten/presensi';
-import Validasi from './pages/LaboranPages/validasiData';
-import Status from './pages/LaboranPages/validasiData/status';
-import Register from './pages/auth/Register';
-import JadwalPraktikum from './components/table/jadwal';
-import JadwalLab from './pages/AslabPages/Jadwal';
-import checkLogin from './utils/checkLogin';
-import Sertifikat from './components/downloadSertif';
-import Footer from './components/footer';
-import NavMhs from './components/NavigationBar/navMhs';
-import NavLaboran from './components/NavigationBar/navLaboran';
-import NavAslab from './components/NavigationBar/navAslab';
+
+import jwtDecode from "jwt-decode";
+import { AuthContext } from "./context/AuthContext";
+
+import Login from "./pages/auth/Login";
+import HomeMahasiswa from "./pages/Home/mhs";
+import HomeAdmin from "./pages/Home/laboran";
+import NotFound from "./pages/errors/NotFound";
+import RequireAuth from "./components/RequireAuth";
+import Welcome from "./pages/Home/Welcome";
+import Unauthorized from "./components/Unauthorized";
+import Layout from "./components/Layout";
+import Civitas from "./pages/MahasiswaPages/Civitas";
+import Mendaftar from "./pages/MahasiswaPages/caraMendaftar";
+import Pendaftaran from "./pages/LaboranPages/pendaftaran";
+import Pengumuman from "./pages/MahasiswaPages/pengumuman";
+import DataUser from "./pages/LaboranPages/dataUser";
+import DataLaboran from "./pages/LaboranPages/dataLaboran";
+import DataAsisten from "./pages/LaboranPages/dataAsisten";
+import Kehadiran from "./pages/LaboranPages/kehadiranAsisten";
+import Presensi from "./pages/LaboranPages/kehadiranAsisten/presensi";
+import Validasi from "./pages/LaboranPages/validasiData";
+import Status from "./pages/LaboranPages/validasiData/status";
+import Register from "./pages/auth/Register";
+import JadwalPraktikum from "./components/table/jadwal";
+import JadwalLab from "./pages/AslabPages/Jadwal";
+import checkLogin from "./utils/checkLogin";
+import Sertifikat from "./components/downloadSertif";
+import Footer from "./components/footer";
+import NavMhs from "./components/NavigationBar/navMhs";
+import NavLaboran from "./components/NavigationBar/navLaboran";
+import NavAslab from "./components/NavigationBar/navAslab";
 
 function App() {
-// const userRole = useSelector((state) => state.user.role);
+  // const userRole = useSelector((state) => state.user.role);
   // const isLogin = useSelector((state) => state.user.isLogin);
   // const dispatch = useDispatch();
-  const [userRole, setUserRole] = useState('');
+  const existingToken = localStorage.getItem("accessToken");
+  const [authTokens, setAuthTokens] = useState(existingToken);
+  const [userData, setUserData] = useState();
+
+  const [userRole, setUserRole] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
   const isLogin = location.pathname === "/login";
@@ -69,7 +71,8 @@ function App() {
   //   getRole();
   // }, []);
 
-  {/* // const Authorization = (WrappedComponent, allowedRoles) => {
+  {
+    /* // const Authorization = (WrappedComponent, allowedRoles) => {
 //   class WithAuthorization extends Component {
 //     render() {
 //       const userType  = this.props.userType;
@@ -146,106 +149,176 @@ function App() {
 //       }
 //     }
 //     getRole();
-//   }, []); */}
-
-  useEffect(() => {
-    // Ambil token akses dari local storage (atau tempat penyimpanan lainnya)
-    const accessToken = localStorage.getItem('accessToken');
-
-    if (accessToken) {
-      // Dekode token akses untuk mendapatkan informasi role
-      // const decodedToken = decode(accessToken);
-      // const userRole = decodedToken.role;
-      const decodedToken = useJwt.decode(accessToken);
-      const userRole = decodedToken.role;
-      // Simpan role dalam state
-      setUserRole(userRole);
-      setIsLoading(false);
-    } else {
-      setIsLoading(false);
-    }
-  }, []);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
+//   }, []); */
   }
 
+  // useEffect(() => {
+  //   // Ambil token akses dari local storage (atau tempat penyimpanan lainnya)
+  //   const accessToken = localStorage.getItem("accessToken");
+
+  //   if (accessToken) {
+  //     // Dekode token akses untuk mendapatkan informasi role
+  //     // const decodedToken = decode(accessToken);
+  //     // const userRole = decodedToken.role;
+  //     const decodedToken = useJwt.decode(accessToken);
+  //     const userRole = decodedToken.role;
+  //     // Simpan role dalam state
+  //     setUserRole(userRole);
+  //     setIsLoading(false);
+  //   } else {
+  //     setIsLoading(false);
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   const fetchUserRole = async () => {
+  //     try {
+  //       const accessToken = localStorage.getItem("access_token");
+  //       const decodedToken = useJwt.decode(accessToken);
+  //       const userRole = decodedToken.role;
+  //       setUserRole(userRole);
+  //       console.log(decodedToken);
+  //       if (accessToken) {
+  //         const decodedToken = useJwt.decode(accessToken);
+  //         const userRole = decodedToken.role;
+  //         setUserRole(userRole);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching user role:", error);
+  //       // Handle the error, e.g., redirect to a login page or show an error message.
+  //     }
+  //     setIsLoading(false); // Setelah mendapatkan informasi role atau jika token tidak ada
+  //   };
+
+  //   fetchUserRole();
+  // }, []);
+
+  const setLogout = () => {
+    localStorage.clear();
+    setAuthTokens(null);
+  };
+
+  const setTokens = (data) => {
+    localStorage.setItem("accessToken", data);
+    setAuthTokens(data);
+  };
+
+  const dataContext = useMemo(
+    () => ({ authTokens, setAuthTokens: setTokens, setLogout, userData }),
+    [authTokens, userData]
+  );
+
+  useEffect(() => {
+    if (authTokens) {
+      const accessDecode = jwtDecode(authTokens);
+      const dataUser = {
+        user_id: accessDecode.user_id,
+        role: accessDecode.role,
+        username: accessDecode.username,
+      };
+      setUserData(dataUser);
+    }
+    setIsLoading(false);
+  }, [authTokens]);
+
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
+
+  // console.log(checkLogin());
+
   return (
-    
     <div className="App">
       {/* {!isLogin && userRole === 'Mahasiswa' && <NavMhs/> || 
       !isLogin && userRole === 'Laboran' && <NavLaboran/>} */}
-{/* <header id='header'>
+      {/* <header id='header'>
       {!isLogin && <NavMhs />}
       </header> */}
-      {checkLogin() && userRole === 'Mahasiswa' && <NavMhs/>} 
-        {checkLogin() && userRole === 'Laboran' && <NavLaboran/>}
-       {checkLogin() && userRole === 'Asisten' && <NavAslab/>}
-        
 
-      <Routes>
-      {/* Public Routes */}
-      <Route path="/" element={<Layout />} />
-      <Route
-        exact
-        path="/login"
-        render={(props) => {
-          if (localStorage.getItem('accessToken')) {
-            return <Navigate to="/" />;
-          } else {
-            return <Login {...props} />;
+      <AuthContext.Provider value={dataContext}>
+        {authTokens ? (
+          <>
+            {userData?.role === "Laboran" ? (
+              <NavLaboran />
+            ) : userData?.role === "Asisten" ? (
+              <NavAslab />
+            ) : (
+              <NavMhs />
+            )}
+            <Routes>
+              {/* <Route path="/" element={<Welcome />} /> */}
+              {/* <Route path="*" element={<Navigate to="/" />} /> */}
 
-          }
-        } 
-      } element={<Login />} />
-        <Route path="unauthorized" element={<Unauthorized />} />
+              <Route path="unauthorized" element={<Unauthorized />} />
 
-        {/* Mahasiswa Routes */}
-          {userRole === 'Mahasiswa' && (
-            <Route path='/mahasiswa' element={<Welcome/>}/>)}
-            {userRole === 'Mahasiswa' && (
-            <Route path='/pengumuman' element={<Pengumuman/>}/>)}
-            {userRole === 'Mahasiswa' && (
-            <Route path='/civitas' element={<Civitas/>}/>)}
-            {userRole === 'Mahasiswa' && (
-            <Route path='/mendaftar' element={<Mendaftar/>}/>)}
-            {userRole === 'Mahasiswa' && (
-            <Route path='/pendaftaran' element={<Pendaftaran/>}/>)}
+              {/* Mahasiswa Routes */}
+              {userData?.role === "Mahasiswa" && (
+                <Route path="/" element={<Welcome />} />
+              )}
 
-        {/* Asisten Lab Routes */}
-          {/* <Route element={<RequireAuth allowedRoles={["Asisten"]} />}> */}
-          <Route path='/asisten' element={<JadwalLab/>}/>
-            <Route path='/penilaian' element={<Pengumuman/>}/>
-            <Route path='/Penilaian-mahasiswa' element={<Civitas/>}/>
-            <Route path='/sertifikat' element={<Sertifikat/>}/>
-          {/* </Route> */}
+              <Route path="/pengumuman" element={<Pengumuman />} />
+              <Route path="/civitas" element={<Civitas />} />
+              <Route path="/mendaftar" element={<Mendaftar />} />
+              <Route path="/pendaftaran" element={<Pendaftaran />} />
 
-          {/* Laboran Routes */}
-          {userRole === 'Laboran' && (
-            <Route path='/laboran' element={<JadwalPraktikum/>}/>)}
-          {userRole === 'Laboran' && (
-            <Route exact path='/data-user' element={<DataUser/>}/>)}
-          {userRole === 'Laboran' && (
-            <Route exact path='/data-laboran' element={<DataLaboran/>}/>)}
-          {userRole === 'Laboran' && (
-            <Route exact path='/data-asisten' element={<DataAsisten/>}/>)}
-          {userRole === 'Laboran' && (
-            <Route exact path='/kehadiran' element={<Kehadiran/>}/>)}
-          {userRole === 'Laboran' && (
-            <Route exact path='/presensi' element={<Presensi/>}/>)}
-          {userRole === 'Laboran' && (
-            <Route exact path='/validasi' element={<Validasi/>}/>)}
-          {userRole === 'Laboran' && (
-            <Route exact path='/status' element={<Status/>}/>)}
-          {userRole === 'Laboran' && (
-            <Route exact path='/register' element={<Register/>}/>)}
+              {/* Asisten Lab Routes */}
+              {/* <Route element={<RequireAuth allowedRoles={["Asisten"]} />}> */}
+              {userData?.role === "Asisten" && (
+                <Route path="/" element={<JadwalLab />} />
+              )}
 
-          <Route path="*" element={<NotFound/>} /> 
-          
-      </Routes>
+              <Route path="/penilaian" element={<Pengumuman />} />
+              <Route path="/Penilaian-mahasiswa" element={<Civitas />} />
+              <Route path="/sertifikat" element={<Sertifikat />} />
+
+              {/* </Route> */}
+
+              {/* Laboran Routes */}
+              {userData?.role === "Laboran" && (
+                <Route path="/" element={<JadwalPraktikum />} />
+              )}
+              {userData?.role === "Laboran" && (
+                <Route exact path="/data-user" element={<DataUser />} />
+              )}
+              {userData?.role === "Laboran" && (
+                <Route exact path="/data-laboran" element={<DataLaboran />} />
+              )}
+              {userData?.role === "Laboran" && (
+                <Route exact path="/data-asisten" element={<DataAsisten />} />
+              )}
+              {userData?.role === "Laboran" && (
+                <Route exact path="/kehadiran" element={<Kehadiran />} />
+              )}
+              {userData?.role === "Laboran" && (
+                <Route exact path="/presensi" element={<Presensi />} />
+              )}
+              {userData?.role === "Laboran" && (
+                <Route exact path="/validasi" element={<Validasi />} />
+              )}
+              {userData?.role === "Laboran" && (
+                <Route exact path="/status" element={<Status />} />
+              )}
+              {userData?.role === "Laboran" && (
+                <Route exact path="/register" element={<Register />} />
+              )}
+
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </>
+        ) : (
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            {/* <Route path="*" element={<Navigate to="/login" />} /> */}
+          </Routes>
+        )}
+
         <footer id="footer">
-          <Footer/>
+          <Footer />
         </footer>
+      </AuthContext.Provider>
+      {/* {checkLogin() && userRole === "Mahasiswa" && <NavMhs />}
+      {checkLogin() && userRole === "Laboran" && <NavLaboran />}
+      {checkLogin() && userRole === "Asisten" && <NavAslab />} */}
     </div>
   );
 }
