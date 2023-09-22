@@ -6,13 +6,13 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Testimonials from "../../components/testimonials";
-
+import "../../assets/styles/homeMhs.css";
 
 export default function Welcome () {
   return (
     <>
       {/* Header */}
-      <section className="header">
+      <section id="welcome" className="block welcome-block">
         <div className="container">
           <div className="row " id="welcomeH">
             <div className="col-sm-12 col-md-6 col-lg-4 polaroid-left" id="polaroid">
@@ -29,7 +29,7 @@ export default function Welcome () {
               </p>
               {/* Button */}
               <NavLink
-                to="/login"
+                to="/mendaftar"
                 className="btn btn-primary col-6 mx-auto mt-4"
                 id="btn-home"
               >

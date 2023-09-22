@@ -13,12 +13,27 @@ import { MdOutlineEdit as Edit, MdLogout as LogOut } from "react-icons/md";
 import Avatar from "react-avatar";
 import Logout from "../modal/Logout";
 import Login from "../../pages/auth/Login";
+import { useAuth } from "../../context/AuthContext";
 
 export default function NavLaboran() {
   const [showModalConfirm, setShowModalConfirm] = useState(false);
   const handleOpenModal = () => {
     setShowModalConfirm(true);
   };
+  const [sidebar, setSidebar] = useState(false);
+  const showSidebar = () => setSidebar(!sidebar);
+  
+  const navigate = useNavigate();
+  const { setLogout } = useAuth();
+
+  const HandleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/")
+    // navigate("/login");
+    setLogout();
+  };
+
+
 
   const NavLaboranData = [
     {
@@ -59,23 +74,13 @@ export default function NavLaboran() {
     },
     {
       title: "Log Out",
-      onClick: () => handleOpenModal(),
+      onClick: () => HandleLogout(),
       icon: <FaIcons.FaClipboardCheck />,
       cName: "nav-text",
     },
   ];
 
-  const navigate = useNavigate();
-  const logout = useLogout();
 
-  const signout = async () => {
-    await logout();
-    navigate("/login");
-  };
-
-  const [sidebar, setSidebar] = useState(false);
-
-  const showSidebar = () => setSidebar(!sidebar);
   return (
     <>
       <IconContext.Provider value={{ color: "#000" }}>
@@ -111,10 +116,6 @@ export default function NavLaboran() {
               })}
             </ul>
           </nav>
-          <Logout
-            showModal={showModalConfirm}
-            setShowModal={setShowModalConfirm}
-          />
         </IconContext.Provider>
       </IconContext.Provider>
     </>

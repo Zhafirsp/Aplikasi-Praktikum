@@ -3,69 +3,101 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import { ToastContainer, toast } from "react-toastify";
-import {API} from '../../api/axios';
+// import {API} from '../../api/axios';
 import Image from 'react-bootstrap/Image';
 import img1 from '../../assets/images/img1.jpg';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { postRegisterApi } from "../../api/auth/authApi";
 
-const Register = () => {
+export default function Register() {
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  
+  const from = location.state?.from?.pathname || "/";
 
   const userRef = useRef();
   const [success, setSuccess] = useState(false);
 
-  const [form, setForm] = useState({
-    username: "",
-    password: "",
-    role: "",
-    confirmPass: "",
-  });
-
-
-  const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPass, setConfirmPass] = useState("");
+  const [role, setRole] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const onRegister = async () => {
+    setLoading(true);
     try {
-      if (!form.username) {
-        toast("Please input username !", {
+      const result = await postRegisterApi({ username, password, role })
+      console.log(result?.data?.data);
+      setLoading(false);
+      setUsername('');
+      setPassword('');
+      setRole('');
+    } catch (err) {
+      if (!err?.response) {
+        toast("No Server Response", {
           type: "error",
-          theme: "colored",
         });
-      }
-      if (!form.password) {
-        toast("Please input password !", {
+      } else if (err.response?.status === 409) {
+        toast("Username Taken", {
           type: "error",
-          theme: "colored",
         });
-      }
-      if (form.password !== form.confirmPass) {
-        toast("Please input the same password !", {
+      } else {
+        toast("Registration  Failed", {
           type: "error",
-          theme: "colored",
         });
-      }
-      if (form.username && form.password && form.confirmPass ) {
-        const { data } = await API().post("v1/auth/register",JSON.stringify({form}));
-        console.log(data);
-        navigate.push("/");
-      }
-    } catch (error) {
-      console.log(error?.response?.data);
-      if (error?.response?.data?.error) {
-        toast(error?.response?.data?.error, {
-          type: "error",
-          theme: "colored",
-        });
-      } else if (error?.response?.data?.errors) {
-        const errors = error?.response?.data?.errors;
-        errors.forEach((err) => {
-          toast(err, {
-            type: "error",
-            theme: "colored",
-          });
-        });
+        console.log(err?.response.data);
+        console.log(err?.response.status);
+        console.log(err?.response.headers);
       }
     }
   };
+
+  // const onRegister = async () => {
+  //   try {
+  //     if (!form.username) {
+  //       toast("Please input username !", {
+  //         type: "error",
+  //         theme: "colored",
+  //       });
+  //     }
+  //     if (!form.password) {
+  //       toast("Please input password !", {
+  //         type: "error",
+  //         theme: "colored",
+  //       });
+  //     }
+  //     if (form.password !== form.confirmPass) {
+  //       toast("Please input the same password !", {
+  //         type: "error",
+  //         theme: "colored",
+  //       });
+  //     }
+  //     if (form.username && form.password && form.confirmPass ) {
+  //       const { data } = await API().post("v1/auth/register",JSON.stringify({form}));
+  //       console.log(data);
+  //       navigate.push("/");
+  //     }
+  //   } catch (error) {
+  //     console.log(error?.response?.data);
+  //     if (error?.response?.data?.error) {
+  //       toast(error?.response?.data?.error, {
+  //         type: "error",
+  //         theme: "colored",
+  //       });
+  //     } else if (error?.response?.data?.errors) {
+  //       const errors = error?.response?.data?.errors;
+  //       errors.forEach((err) => {
+  //         toast(err, {
+  //           type: "error",
+  //           theme: "colored",
+  //         });
+  //       });
+  //     }
+  //   }
+  // };
 
   return (
     <>
@@ -79,52 +111,52 @@ const Register = () => {
         <Col sm={6}>
             <h2 className="text-center fs-1 fw-semibold">REGISTER</h2>
             <form className="login-form">
-            <div class="mb-3">
-                <label for="username" class="form-label input" htmlFor="username">Username</label>
+            <div className="mb-3">
+                <label className="form-label input" htmlFor="username">Username</label>
                 <input 
-                value={form?.username} 
-                onChange={(e) => setForm({...form,username: e.target?.value})} 
+                value={username} 
+                onChange={(e) => setUsername(e.target?.value)} 
                 type="username" 
                 placeholder="NIP/NPM" 
-                class="form-control" 
+                className="form-control" 
                 id="username" 
                 name="username"
                 />
             </div>
-            <div class="row g-2">
-            <div class="col-md">
-              <div class="mb-3">
-              <label for="password" class="form-label input" htmlFor="password">Password</label>
+            <div className="row g-2">
+            <div className="col-md">
+              <div className="mb-3">
+              <label className="form-label input" htmlFor="password">Password</label>
               <input 
-              value={form?.password} 
-              onChange={(e) => setForm({...form,password: e.target?.value})} 
+              value={password} 
+              onChange={(e) => setPassword(e.target?.value)} 
               type="password" 
               placeholder="********" 
-              class="form-control" 
+              className="form-control" 
               id="password" 
               name="password" />
               </div>
             </div>
-            <div class="col-md">
-              <div class="mb-3">
-                <label for="confirm password" class="form-label input" htmlFor="confirm password"> Konfirmasi Password</label>
+            <div className="col-md">
+              <div className="mb-3">
+                <label className="form-label input" htmlFor="confirm password"> Konfirmasi Password</label>
                 <input 
-                value={form?.confirmPass} 
-                onChange={(e) => setForm({...form,confirmPass: e.target?.value})} 
+                value={confirmPass} 
+                onChange={(e) => setConfirmPass(e.target?.value)} 
                 type="password" 
                 placeholder="********" 
-                class="form-control" 
+                className="form-control" 
                 id="confirm password" 
                 name="confirm password" />
               </div>
             </div>
             </div>
-            <label for="username" class="form-label input" htmlFor="username">Role</label>
+            <label className="form-label input" htmlFor="role">Role</label>
             <select 
-            class="form-select" 
+            className="form-select" 
             aria-label="Default select example" 
-            value={form?.role}
-            onChange={(e) => setForm({...form,role: e.target?.value})} 
+            value={role}
+            onChange={(e) => setRole(e.target?.value)} 
             >
               <option  value="mahasiswa">Mahasiswa</option>
               <option  value="asisten">Asisten</option>
@@ -132,12 +164,12 @@ const Register = () => {
             </select>
 
             <button
-                type="button"
-                onClick={() => onRegister()}
+                type="submit"
                 className="btn btn-primary col-12 mx-auto mt-4"
                 id="submit"
+                onClick={() => onRegister()}
               >
-                Daftar
+                  {loading ? "Loading..." : "REGISTER"}
               </button>
             </form>
         </Col>
@@ -147,5 +179,3 @@ const Register = () => {
     </>
   )
 }
-
-export default Register;

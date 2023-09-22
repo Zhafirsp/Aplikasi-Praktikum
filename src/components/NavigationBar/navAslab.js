@@ -5,7 +5,7 @@ import Navbar from "react-bootstrap/Navbar";
 import "../../assets/styles/navMhs.css";
 import { useNavigate, NavLink } from "react-router-dom";
 import useLogout from "../../hooks/useLogout";
-import { DataContext } from "../../context/DataContext";
+// import { DataContext } from "../../context/DataContext";
 import checkLogin from "../../utils/checkLogin";
 import { MdOutlineEdit as Edit, MdLogout as LogOut } from "react-icons/md";
 import Avatar from "react-avatar";
@@ -21,20 +21,29 @@ export default function NavAslab() {
   //     navigate('/login');
   // }
   //user profile
-  const { userLogin: data } = useContext(DataContext);
+  // const { userLogin: data } = useContext(DataContext);
   const { authTokens } = useAuth();
 
   const navigate = useNavigate();
+  
 
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
     setShowModal((prev) => !prev);
   };
+  
+  const { setLogout } = useAuth();
+
+  const HandleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/")
+    // navigate("/login");
+    setLogout();
+  };
 
   return (
     <>
-      <Logout showModal={showModal} setShowModal={setShowModal} />
       <Navbar bg="light" expand="lg">
         <Container>
           {/* LEFT */}
@@ -108,8 +117,8 @@ export default function NavAslab() {
                   <div
                     className="dropdown-item btn btn-logout"
                     id="dropItem"
-                    // onClick={handleLogout}
-                    onClick={openModal}
+                    onClick={HandleLogout}
+                    // onClick={openModal}
                   >
                     <LogOut id="outIcon" /> Log Out
                   </div>

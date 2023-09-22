@@ -1,2 +1,9 @@
 export const LOGIN_URL = "v1/auth/login";
+export const REGISTER_URL = "v1/auth/users/register";
 export const USER_URL = "v1/users";
+export const LABORAN_URL = "v1/laborans";
+export const ASISTEN_URL = "v1/asistens";
+export const PROFILE_URL = "v1/profile";
+export const PENDAFTARAN_URL = "v1/pendaftaran";
+export const JADWAL_URL = "v1/jadwalpikets";
+export const SEVIMA_USER_URL = "v1/sevima/mahasiswa";

@@ -1,28 +1,21 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import "../../assets/styles/navMhs.css";
 import { useNavigate, NavLink } from "react-router-dom";
 import useLogout from "../../hooks/useLogout";
-import { DataContext } from "../../context/DataContext";
 import checkLogin from "../../utils/checkLogin";
 import { MdOutlineEdit as Edit, MdLogout as LogOut } from "react-icons/md";
 import Avatar from "react-avatar";
 import Logout from "../modal/Logout";
-
 import { useAuth } from "../../context/AuthContext";
+import { getProfileApi } from "../../api/profile/profileApi";
 
 export default function NavMhs() {
-  //logout
-  // const logout = useLogout();
-
-  // const Logout = async () => {
-  //     await logout();
-  //     navigate('/login');
-  // }
   //user profile
-  const { userLogin: data } = useContext(DataContext);
+  const [profile, setProfile] = useState();
+  // const { getUserProfile: data } = useContext(DataContext);
   const { authTokens } = useAuth();
 
   const navigate = useNavigate();
@@ -31,11 +24,33 @@ export default function NavMhs() {
 
   const openModal = () => {
     setShowModal((prev) => !prev);
+  }; 
+  
+  const { setLogout } = useAuth();
+
+  const HandleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/")
+    // navigate("/login");
+    setLogout();
   };
+
+  const getUserProfile = async () => {
+    try {
+      const {data} = await getProfileApi();
+      setProfile([]);
+      console.log(data?.dataUser);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getUserProfile();
+  }, []);
 
   return (
     <>
-      <Logout showModal={showModal} setShowModal={setShowModal} />
       <Navbar bg="light" expand="lg">
         <Container>
           {/* LEFT */}
@@ -110,8 +125,8 @@ export default function NavMhs() {
                   <div
                     className="dropdown-item btn btn-logout"
                     id="dropItem"
-                    // onClick={handleLogout}
-                    onClick={openModal}
+                    onClick={HandleLogout}
+                    // onClick={openModal}
                   >
                     <LogOut id="outIcon" /> Log Out
                   </div>

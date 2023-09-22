@@ -1,9 +1,39 @@
+import { useState, useEffect } from "react";
 import Container from 'react-bootstrap/Container';
 import NavLink from 'react-bootstrap/esm/NavLink';
 import {PiPencilSimpleBold} from 'react-icons/pi';
 import {BiTrashAlt} from 'react-icons/bi';
+import { Link } from 'react-router-dom'
+import { getDataAsistensApi } from "../../../api/asistens/asistensApi";
 
 export default function DataAsisten () {
+
+  const [asistens, setAsistens] = useState();
+  
+  const getDataAsisten = async () => {
+    try {
+      const result = await getDataAsistensApi();
+      setAsistens(result?.data?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteAsisten = (id) => {
+    try {
+      const remove = getDataAsistensApi(id);
+      setAsistens([]);
+      console.log(remove?.data?.data);
+      window.location.reload(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getDataAsisten();
+  }, []);
+
   return (
     <>
     <section id="teams" className="block teams-block">
@@ -13,7 +43,7 @@ export default function DataAsisten () {
           <hr/>
           <div className="subtitle">LAB TIF</div>
         </div>
-        <table class="table table-bordered text-center" style={{ backgroundColor:"#063554", color:"white", borderRadius:"10px"}}>
+        <table className="table table-bordered text-center" style={{ backgroundColor:"#063554", color:"white", borderRadius:"10px"}}>
           <thead>
             <tr>
               <th className='text-center' colSpan={"7"}><h3 className='fw-bold'>Daftar Data User</h3></th>
@@ -29,42 +59,28 @@ export default function DataAsisten () {
             </tr>
           </thead>
           <tbody style={{ backgroundColor:"#fff", color:"black", borderRadius:"10px"}}>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>
-                <button type="button" class="btn btn-warning mx-2 text-white"><PiPencilSimpleBold/></button>
-                <button type="button" class="btn btn-danger"><BiTrashAlt/></button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>
-                <button type="button" class="btn btn-warning mx-2 text-white"><PiPencilSimpleBold/></button>
-                <button type="button" class="btn btn-danger"><BiTrashAlt/></button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry the Bird</td>
-              <td>@twitter</td>
-              <td>@fat</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>
-                <button type="button" class="btn btn-warning mx-2 text-white"><PiPencilSimpleBold/></button>
-                <button type="button" class="btn btn-danger"><BiTrashAlt/></button>
-              </td>
-            </tr>
+          {asistens && asistens.map((asisten, index) => (
+                  <tr key={asisten.asisten_id}>  
+                    <td>{index + 1}</td>
+                    <td>{asisten.asisten_id}</td>
+                    <td>{asisten.nim}</td>
+                    <td>{asisten.nama_asisten}</td>
+                    <td>{asisten.periode}</td>
+                    <td>{asisten.golongan}</td>
+                    <td>
+                    <Link 
+                    to={`Edit/${asisten.id}`} 
+                    className='btn btn-warning mx-2 text-white'>
+                      <PiPencilSimpleBold />
+                    </Link>
+                    <button 
+                    onClick={e => deleteAsisten (asisten.id)} 
+                    className='btn btn-danger'>
+                      <BiTrashAlt />
+                    </button>
+                  </td>
+                  </tr>
+              ))}
           </tbody>
         </table>
         <NavLink

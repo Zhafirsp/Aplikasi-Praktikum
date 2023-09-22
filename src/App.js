@@ -32,7 +32,7 @@ import Register from "./pages/auth/Register";
 import JadwalPraktikum from "./components/table/jadwal";
 import JadwalLab from "./pages/AslabPages/Jadwal";
 import checkLogin from "./utils/checkLogin";
-import Sertifikat from "./components/downloadSertif";
+import Sertifikat from "./pages/AslabPages/Sertifikat/sertifikat";
 import Footer from "./components/footer";
 import NavMhs from "./components/NavigationBar/navMhs";
 import NavLaboran from "./components/NavigationBar/navLaboran";
@@ -231,13 +231,13 @@ function App() {
     <div className="App">
       {/* {!isLogin && userRole === 'Mahasiswa' && <NavMhs/> || 
       !isLogin && userRole === 'Laboran' && <NavLaboran/>} */}
-      {/* <header id='header'>
-      {!isLogin && <NavMhs />}
-      </header> */}
+      
+      {/* {!isLogin && <NavMhs />} */}
 
       <AuthContext.Provider value={dataContext}>
         {authTokens ? (
           <>
+          <header id='header'>
             {userData?.role === "Laboran" ? (
               <NavLaboran />
             ) : userData?.role === "Asisten" ? (
@@ -245,6 +245,7 @@ function App() {
             ) : (
               <NavMhs />
             )}
+            </header>
             <Routes>
               {/* <Route path="/" element={<Welcome />} /> */}
               {/* <Route path="*" element={<Navigate to="/" />} /> */}
@@ -255,21 +256,33 @@ function App() {
               {userData?.role === "Mahasiswa" && (
                 <Route path="/" element={<Welcome />} />
               )}
-
-              <Route path="/pengumuman" element={<Pengumuman />} />
-              <Route path="/civitas" element={<Civitas />} />
-              <Route path="/mendaftar" element={<Mendaftar />} />
-              <Route path="/pendaftaran" element={<Pendaftaran />} />
+              {userData?.role === "Mahasiswa" && (
+                <Route path="/pengumuman" element={<Pengumuman />} />
+              )}
+              {userData?.role === "Mahasiswa" && (
+                <Route path="/civitas" element={<Civitas />} />
+              )}
+              {userData?.role === "Mahasiswa" && (
+                <Route path="/mendaftar" element={<Mendaftar />} />
+              )}
+              {userData?.role === "Mahasiswa" && (
+                <Route path="/Pendaftaran" element={<Pendaftaran />} />
+              )}
 
               {/* Asisten Lab Routes */}
               {/* <Route element={<RequireAuth allowedRoles={["Asisten"]} />}> */}
               {userData?.role === "Asisten" && (
                 <Route path="/" element={<JadwalLab />} />
               )}
-
-              <Route path="/penilaian" element={<Pengumuman />} />
-              <Route path="/Penilaian-mahasiswa" element={<Civitas />} />
-              <Route path="/sertifikat" element={<Sertifikat />} />
+              {userData?.role === "Asisten" && (
+                <Route path="/penilaian" element={<Pengumuman />} />
+              )}
+              {userData?.role === "Asisten" && (
+                <Route path="/Penilaian-mahasiswa" element={<Civitas />} />
+              )}
+              {userData?.role === "Asisten" && (
+                <Route path="/sertifikat" element={<Sertifikat />} />
+              )}
 
               {/* </Route> */}
 
@@ -307,7 +320,7 @@ function App() {
           </>
         ) : (
           <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Login />} />
             {/* <Route path="*" element={<Navigate to="/login" />} /> */}
           </Routes>
         )}

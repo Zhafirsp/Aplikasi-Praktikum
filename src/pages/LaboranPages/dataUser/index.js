@@ -6,21 +6,34 @@ import NavLink from "react-bootstrap/esm/NavLink";
 import { PiPencilSimpleBold } from "react-icons/pi";
 import { BiTrashAlt } from "react-icons/bi";
 import React /* , { useContext } */ from "react";
+import { getDataUsersApi, getSevimaDataUsersApi } from "../../../api/users/usersApi";
+import { Link } from 'react-router-dom';
+import axios from "axios";
 
-import { getDataUsersApi } from "../../../api/users/usersApi";
-
-export default function DataUser() {
+const UserList = () => {
   const [users, setUsers] = useState();
+  const [loading, setLoading] = useState(true);
+  
   // const axiosPrivate = useAxiosPrivate();
   // const navigate = useNavigate();
   // const location = useLocation();
   // const { dataUser: data } = useContext(DataContext);
 
+  // const getSevimaDataUsers = async () => {
+  //   setLoading(false);
+  //   try {
+  //     const result = await getSevimaDataUsersApi();
+  //     setUsers(result?.data?.data);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   const getDataUsers = async () => {
     try {
       const result = await getDataUsersApi();
-      setUsers([]);
-      console.log(result?.data?.data);
+      setUsers(result?.data?.data);
     } catch (error) {
       console.log(error);
     }
@@ -28,33 +41,18 @@ export default function DataUser() {
 
   useEffect(() => {
     getDataUsers();
+    // getSevimaDataUsers();
   }, []);
 
-  // useEffect(() => {
-  //   let isMounted = true;
-  //   const controller = new AbortController();
 
-  //   const getUsers = async () => {
-  //     try {
-  //       const response = await axiosPrivate.get("/v1/users", {
-  //         signal: controller.signal,
-  //       });
-  //       console.log(response.data);
-  //       isMounted && setUsers(response.data);
-  //     } catch (err) {
-  //       console.error(err);
-  //       navigate("/login", { state: { from: location }, replace: true });
-  //     }
-  //   };
-
-  //   getUsers();
-
-  //   return () => {
-  //     isMounted = false;
-  //     controller.abort();
-  //   };
-  // }, []);
-
+  const deleteUser  = async (id) => {
+    try {
+      await axios.delete(`https://api-staging-labtif.cyclic.cloud/v1/users/${id}`) 
+      getDataUsers([]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <section id="teams" className="block teams-block">
@@ -64,6 +62,14 @@ export default function DataUser() {
             <hr />
             <div className="subtitle">LAB TIF</div>
           </div>
+            {/* <button
+                  type="button"
+                  onClick={() => getSevimaDataUsers()}
+                  className="btn btn-warning col-4 mx-auto mb-2 text-white"
+                  id="submit"
+                >
+                  {loading ? "Loading..." : "Update Data"}
+                </button> */}
           <table
             className="table table-bordered text-center"
             style={{
@@ -75,7 +81,7 @@ export default function DataUser() {
             <thead>
               <tr>
                 <th className="text-center" colSpan={"7"}>
-                  <h3 className="fw-bold">Daftar Data User</h3>
+                  <h3 className="fw-bold">Daftar User</h3>
                 </th>
               </tr>
               <tr>
@@ -84,6 +90,7 @@ export default function DataUser() {
                 <th scope="col">Username</th>
                 <th scope="col">Role</th>
                 <th scope="col">Email</th>
+                <th scope="col">No Hp</th>
                 <th scope="col">Aksi</th>
               </tr>
             </thead>
@@ -94,62 +101,49 @@ export default function DataUser() {
                 borderRadius: "10px",
               }}
             >
-              {users?.length ? (
-                <tr>
-                  {users.map((user, i) => (
-                    <td key={i}>{user?.username}</td>
-                  ))}
-                  <td>
-                    <button
-                      type="button"
-                      className="btn btn-warning mx-2 text-white"
-                    >
+              {users && users.map((user, index) => (
+                  <tr key={user.user_id}>
+                    <td>{index + 1}</td>
+                    <td>{user.img_url}</td>
+                    <td>{user.username}</td>
+                    <td>{user.role}</td>
+                    <td>{user.email}</td>
+                    <td>{user.no_hp}</td>
+                    <td>
+                    <Link 
+                    to={`Edit/${user.id}`} 
+                    className='btn btn-warning mx-2 text-white'>
                       <PiPencilSimpleBold />
-                    </button>
-                    <button type="button" className="btn btn-danger">
+                    </Link>
+                    <button 
+                    onClick={e => deleteUser (user.id)} 
+                    className='btn btn-danger'>
                       <BiTrashAlt />
                     </button>
                   </td>
-                </tr>
-              ) : (
-                <p>No users to display</p>
-              )}
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                <td>Jacob</td>
-                <td>
-                  <button
-                    type="button"
-                    className="btn btn-warning mx-2 text-white"
-                  >
-                    <PiPencilSimpleBold />
-                  </button>
-                  <button type="button" className="btn btn-danger">
-                    <BiTrashAlt />
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry the Bird</td>
-                <td>@twitter</td>
-                <td>@fat</td>
-                <td>Thornton</td>
-                <td>
-                  <button
-                    type="button"
-                    className="btn btn-warning mx-2 text-white"
-                  >
-                    <PiPencilSimpleBold />
-                  </button>
-                  <button type="button" className="btn btn-danger">
-                    <BiTrashAlt />
-                  </button>
-                </td>
-              </tr>
+                  </tr>
+              ))}
+                  {/* {users?.length ? (
+                      <tr>
+                        {users.map((user, index) => ( 
+                           <td key={index}>{user?.username}</td>
+                         ))}
+                         <td>
+                           <button
+                            type="button"
+                            className="btn btn-warning mx-2 text-white"
+                          >
+                             <PiPencilSimpleBold />
+                           </button>
+                           <button type="button" className="btn btn-danger">
+                             <BiTrashAlt />
+                           </button>
+                         </td>
+                       </tr>
+                     ) : (
+                       <p>No users to display</p>
+                     )} */}
+              
             </tbody>
           </table>
           <NavLink
@@ -164,3 +158,5 @@ export default function DataUser() {
     </>
   );
 }
+
+export default UserList;

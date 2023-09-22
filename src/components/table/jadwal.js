@@ -12,7 +12,7 @@ export default function JadwalPraktikum () {
           <hr/>
           <div className="subtitle">LAB TIF</div>
         </div>
-        <table class="table table-bordered text-center" style={{ backgroundColor:"#063554", color:"white", borderRadius:"10px"}}>
+        <table className="table table-bordered text-center" style={{ backgroundColor:"#063554", color:"white", borderRadius:"10px"}}>
           <thead>
             <tr>
               <th className='text-center' colSpan={"11"}><h3 className='fw-bold'>Senin</h3></th>
@@ -44,8 +44,8 @@ export default function JadwalPraktikum () {
               <td>Mark</td>
               <td>Otto</td>
               <td>
-                <button type="button" class="btn btn-warning mx-2 text-white"><PiPencilSimpleBold/></button>
-                <button type="button" class="btn btn-danger"><BiTrashAlt/></button>
+                <button type="button" className="btn btn-warning mx-2 text-white"><PiPencilSimpleBold/></button>
+                <button type="button" className="btn btn-danger"><BiTrashAlt/></button>
               </td>
             </tr>
             <tr>
@@ -60,8 +60,8 @@ export default function JadwalPraktikum () {
               <td>Mark</td>
               <td>Otto</td>
               <td>
-                <button type="button" class="btn btn-warning mx-2 text-white"><PiPencilSimpleBold/></button>
-                <button type="button" class="btn btn-danger"><BiTrashAlt/></button>
+                <button type="button" className="btn btn-warning mx-2 text-white"><PiPencilSimpleBold/></button>
+                <button type="button" className="btn btn-danger"><BiTrashAlt/></button>
               </td>
             </tr>
             <tr>
@@ -76,8 +76,8 @@ export default function JadwalPraktikum () {
               <td>Mark</td>
               <td>Otto</td>
               <td>
-                <button type="button" class="btn btn-warning mx-2 text-white"><PiPencilSimpleBold/></button>
-                <button type="button" class="btn btn-danger"><BiTrashAlt/></button>
+                <button type="button" className="btn btn-warning mx-2 text-white"><PiPencilSimpleBold/></button>
+                <button type="button" className="btn btn-danger"><BiTrashAlt/></button>
               </td>
             </tr>
           </tbody>
