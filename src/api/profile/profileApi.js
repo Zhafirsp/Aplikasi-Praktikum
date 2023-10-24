@@ -1,6 +1,25 @@
 import apiClient from "../apiClient";
 import { PROFILE_URL } from "../apiUrl";
 
-export const getProfileApi = (params) => {
-  return apiClient.get(PROFILE_URL, { params });
+
+const token = localStorage.getItem("accessToken")
+export const getProfileApi = () => {
+  return apiClient.post(PROFILE_URL, { 
+    crossDomain: true,
+    headers: {
+    Authorization: `Bearer ${token}`,
+     },
+   });
 };
+
+export const getProfileEditApi = (data) => {
+  return apiClient.put(PROFILE_URL, { 
+    data,
+    crossDomain: true,
+    headers: {
+    Authorization: `Bearer ${token}`,
+     },
+   });
+};
+
+

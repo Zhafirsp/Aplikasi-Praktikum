@@ -14,10 +14,7 @@ export default function Status () {
         </div>
         <table class="table table-bordered text-center" style={{ backgroundColor:"#063554", color:"white", borderRadius:"10px"}}>
           <thead>
-            <tr>
-              <th className='text-center' colSpan={"11"}><h3 className='fw-bold'>Pertemuan 1</h3></th>
-            </tr>
-            <tr>
+            <tr className='fw-bold'>
               <th scope="col">No</th>
               <th scope="col">NRP</th>
               <th scope="col">Nama</th>
@@ -37,7 +34,15 @@ export default function Status () {
                 Unduh
                 </button>
                 </td>
-              <td>Otto</td>
+                <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Pilihan
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Edit</a>
+                <a class="dropdown-item" href="#">Hapus</a>
+              </div>
+            </div>
                 <td>
                 <NavLink
                 href="/validasi"

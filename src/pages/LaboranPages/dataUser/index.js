@@ -1,38 +1,49 @@
-import { useState, useEffect } from "react";
+import React, { Component, useEffect, useState, useMemo } from "react";
 // import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 // import { useNavigate, useLocation } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import NavLink from "react-bootstrap/esm/NavLink";
 import { PiPencilSimpleBold } from "react-icons/pi";
 import { BiTrashAlt } from "react-icons/bi";
-import React /* , { useContext } */ from "react";
 import { getDataUsersApi, getSevimaDataUsersApi } from "../../../api/users/usersApi";
 import { Link } from 'react-router-dom';
 import axios from "axios";
+import { useAuth } from "../../../context/AuthContext";
+import * as IoIcons from "react-icons/io";
 
 const UserList = () => {
-  const [users, setUsers] = useState();
-  const [loading, setLoading] = useState(true);
+    const [users, setUsers] = useState();
+    const [loading, setLoading] = useState(true);
+    const [sortBy, setSortBy] = useState(null);
+    const [sortOrder, setSortOrder] = useState('asc');
+  
+  const { authTokens } = useAuth();
   
   // const axiosPrivate = useAxiosPrivate();
   // const navigate = useNavigate();
   // const location = useLocation();
   // const { dataUser: data } = useContext(DataContext);
 
-  // const getSevimaDataUsers = async () => {
-  //   setLoading(false);
-  //   try {
-  //     const result = await getSevimaDataUsersApi();
-  //     setUsers(result?.data?.data);
-  //     setLoading(false);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const getSevimaDataUsers = async () => {
+    setLoading(false);
+    try {
+      const result = await getSevimaDataUsersApi({
+      });
+      setUsers(result?.data?.data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    }
+  };
+
+
 
   const getDataUsers = async () => {
     try {
-      const result = await getDataUsersApi();
+      const result = await getDataUsersApi({});
       setUsers(result?.data?.data);
     } catch (error) {
       console.log(error);
@@ -41,18 +52,42 @@ const UserList = () => {
 
   useEffect(() => {
     getDataUsers();
-    // getSevimaDataUsers();
+    getSevimaDataUsers();
   }, []);
 
 
-  const deleteUser  = async (id) => {
+  const deleteUser  = async (user_id) => {
     try {
-      await axios.delete(`https://api-staging-labtif.cyclic.cloud/v1/users/${id}`) 
+      await axios.delete(`v1/users/${user_id}`) 
       getDataUsers([]);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const handleSort = (key) => {
+    if (key === sortBy) {
+      // Jika kolom yang sama diklik, balik arah penyortiran
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      // Jika kolom berbeda diklik, atur kolom yang akan diurutkan
+      setSortBy(key);
+      setSortOrder('asc');
+    }
+    
+    // Lakukan penyortiran data di sini
+    const sortedData = [...users].sort((a, b) => {
+      if (sortOrder === 'asc') {
+        return a[key] < b[key] ? -1 : 1;
+      } else {
+        return a[key] > b[key] ? -1 : 1;
+      }
+    });
+    
+    // Perbarui state 'data' dengan data yang sudah diurutkan
+    setUsers(sortedData);
+  };
+
   return (
     <>
       <section id="teams" className="block teams-block">
@@ -62,14 +97,14 @@ const UserList = () => {
             <hr />
             <div className="subtitle">LAB TIF</div>
           </div>
-            {/* <button
+            <button
                   type="button"
                   onClick={() => getSevimaDataUsers()}
                   className="btn btn-warning col-4 mx-auto mb-2 text-white"
                   id="submit"
-                >
+                  >
                   {loading ? "Loading..." : "Update Data"}
-                </button> */}
+                </button>
           <table
             className="table table-bordered text-center"
             style={{
@@ -87,9 +122,9 @@ const UserList = () => {
               <tr>
                 <th scope="col">No</th>
                 <th scope="col">Foto</th>
-                <th scope="col">Username</th>
-                <th scope="col">Role</th>
-                <th scope="col">Email</th>
+                <th scope="col">Username<IoIcons.IoMdArrowDropdown onClick={() => handleSort('username')} /></th>
+                <th scope="col">Role<IoIcons.IoMdArrowDropdown onClick={() => handleSort('role')} /></th>
+                <th scope="col">Email<IoIcons.IoMdArrowDropdown onClick={() => handleSort('email')} /></th>
                 <th scope="col">No Hp</th>
                 <th scope="col">Aksi</th>
               </tr>
@@ -101,6 +136,8 @@ const UserList = () => {
                 borderRadius: "10px",
               }}
             >
+              
+            {/* {authTokens ? (
               {users && users.map((user, index) => (
                   <tr key={user.user_id}>
                     <td>{index + 1}</td>
@@ -122,7 +159,36 @@ const UserList = () => {
                     </button>
                   </td>
                   </tr>
-              ))}
+              ))}) :(
+                <p>No users to display</p>
+              )} */}
+
+{authTokens ? (
+  users && users.map((user, index) => (
+    <tr key={user.user_id}>
+      <td>{index + 1}</td>
+      <td>{user.img_url}</td>
+      <td>{user.username}</td>
+      <td>{user.role}</td>
+      <td>{user.email}</td>
+      <td>{user.no_hp}</td>
+      <td>
+        <Link 
+          to={`Edit/${user.id}`} 
+          className='btn btn-warning mx-2 text-white'>
+          <PiPencilSimpleBold />
+        </Link>
+        <button 
+          onClick={e => deleteUser(user.id)} 
+          className='btn btn-danger'>
+          <BiTrashAlt />
+        </button>
+      </td>
+    </tr>
+  ))
+) : (
+  <p>No users to display</p>
+)}
                   {/* {users?.length ? (
                       <tr>
                         {users.map((user, index) => ( 

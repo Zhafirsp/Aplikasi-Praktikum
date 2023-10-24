@@ -32,7 +32,7 @@ export default function Login() {
       setAuthTokens(result.data.access_token);
       setLoading(false);
       navigate("/");
-      // console.log(result);
+      console.log(result);
     } catch (err) {
       if (!err?.response) {
         toast("No Server Response", {

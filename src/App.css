@@ -441,7 +441,7 @@ textarea {
   background: #063554;
   height: 1px;
   position: absolute;
-  bottom: 7px;
+  bottom: -10px;
   left: -20px;
   right: 100%;
   transition: all 0.3s linear;

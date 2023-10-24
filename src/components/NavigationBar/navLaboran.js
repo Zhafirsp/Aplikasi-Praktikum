@@ -14,9 +14,12 @@ import Avatar from "react-avatar";
 import Logout from "../modal/Logout";
 import Login from "../../pages/auth/Login";
 import { useAuth } from "../../context/AuthContext";
+import Nav from "react-bootstrap/Nav";
 
 export default function NavLaboran() {
   const [showModalConfirm, setShowModalConfirm] = useState(false);
+
+  const { authTokens } = useAuth();
   const handleOpenModal = () => {
     setShowModalConfirm(true);
   };
@@ -72,12 +75,6 @@ export default function NavLaboran() {
       icon: <FaIcons.FaClipboardCheck />,
       cName: "nav-text",
     },
-    {
-      title: "Log Out",
-      onClick: () => HandleLogout(),
-      icon: <FaIcons.FaClipboardCheck />,
-      cName: "nav-text",
-    },
   ];
 
 
@@ -97,7 +94,41 @@ export default function NavLaboran() {
                   <AiIcons.AiOutlineClose />
                 </Link>
               </li>
-              {NavLaboranData.map((item, index) => {
+            {/* <li className="text-white">
+            <Nav.Link className="nav-text" href="/"><AiIcons.AiFillHome className="me-2"/>home</Nav.Link>
+            </li>
+            <li className="text-white">
+            <Nav.Link className="nav-text" href="/data-user"><FaIcons.FaUsers />Data User</Nav.Link>
+            </li>
+            <li className="text-white">
+            <Nav.Link className="nav-text" href="/data-laboran"><FaIcons.FaUserCog />Data Laboran</Nav.Link>
+            </li>
+            <li className="text-white">
+            <Nav.Link className="nav-text" href="/data-asisten"><FaIcons.FaUserTie />Data Asisten</Nav.Link>
+            </li>
+            <li className="text-white">
+            <Nav.Link className="nav-text" href="/kehadiran"><Fa6Icons.FaListCheck />Kehadiran Asisten</Nav.Link>
+            </li>
+            <li className="text-white">
+            <Nav.Link className="nav-text" href="/validasi"><FaIcons.FaClipboardCheck />Validasi Data Pendaftaran</Nav.Link>
+            </li>
+            {authTokens ? (
+            <li className="text-white">
+            <Nav.Link className="nav-text" onClick={HandleLogout} ><FaIcons.FaClipboardCheck />Log Out</Nav.Link>
+            </li>
+            ) : (
+            <>
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link text-uppercase login"
+                  to="/login"
+                >
+                  Masuk
+                </NavLink>
+              </li>
+            </>
+            )} */}
+             {NavLaboranData.map((item, index) => {
                 return (
                   <li key={index} className={item.cName}>
                     {item?.path ? (
@@ -114,6 +145,31 @@ export default function NavLaboran() {
                   </li>
                 );
               })}
+              {authTokens ? (
+              <>
+              <li
+                    className="btn btn-logout text-white"
+                    style={{  marginTop: "10px", fontSize:"17px", marginLeft: "20px" } }
+                    id="dropItem"
+                    onClick={HandleLogout}
+                    // onClick={openModal}
+                  >
+                    <LogOut id="outIcon" style={{  } }/><span>Log Out</span>
+                  </li>
+                </>
+              ) : (
+                <>
+                  {/* Form */}
+                  <li className="nav-item">
+                    <NavLink
+                      className="nav-link text-uppercase login"
+                      to="/login"
+                    >
+                      Masuk
+                    </NavLink>
+                  </li>
+                </>
+              )}
             </ul>
           </nav>
         </IconContext.Provider>

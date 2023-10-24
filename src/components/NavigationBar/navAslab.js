@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -11,27 +11,20 @@ import { MdOutlineEdit as Edit, MdLogout as LogOut } from "react-icons/md";
 import Avatar from "react-avatar";
 import Logout from "../modal/Logout";
 import { useAuth } from "../../context/AuthContext";
+import { getProfileApi } from "../../api/profile/profileApi";
 
 export default function NavAslab() {
-  //logout
-  // const logout = useLogout();
-
-  // const Logout = async () => {
-  //     await logout();
-  //     navigate('/login');
-  // }
-  //user profile
-  // const { userLogin: data } = useContext(DataContext);
+  const [profile, setProfile] = useState();
+  // const { getUserProfile: data } = useContext(DataContext);
   const { authTokens } = useAuth();
 
   const navigate = useNavigate();
-  
 
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
     setShowModal((prev) => !prev);
-  };
+  }; 
   
   const { setLogout } = useAuth();
 
@@ -41,6 +34,27 @@ export default function NavAslab() {
     // navigate("/login");
     setLogout();
   };
+
+  
+  const token = localStorage.getItem("accessToken");
+  const getUserProfile = async () => {
+    try {
+      const {data} = await getProfileApi({
+        crossDomain: true,
+        headers: {
+        Authorization: `Bearer ${token}`,
+    },
+      });
+      setProfile([]);
+      console.log(data?.dataUser);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getUserProfile();
+  }, []);
 
   return (
     <>

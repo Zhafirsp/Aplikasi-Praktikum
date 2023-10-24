@@ -3,23 +3,16 @@ import "./App.css";
 import { Routes, Route, Navigate, Outlet, useLocation } from "react-router-dom";
 import React, { Component, useEffect, useState, useMemo } from "react";
 // import { useSelector, connect } from "react-redux";
-import { API } from "./api/axios";
-import { useJwt } from "react-jwt";
-
 import jwtDecode from "jwt-decode";
+import Cookies from 'js-cookie';
 import { AuthContext } from "./context/AuthContext";
-
 import Login from "./pages/auth/Login";
-import HomeMahasiswa from "./pages/Home/mhs";
-import HomeAdmin from "./pages/Home/laboran";
 import NotFound from "./pages/errors/NotFound";
-import RequireAuth from "./components/RequireAuth";
 import Welcome from "./pages/Home/Welcome";
 import Unauthorized from "./components/Unauthorized";
-import Layout from "./components/Layout";
 import Civitas from "./pages/MahasiswaPages/Civitas";
 import Mendaftar from "./pages/MahasiswaPages/caraMendaftar";
-import Pendaftaran from "./pages/LaboranPages/pendaftaran";
+import Pendaftaran from "./pages/MahasiswaPages/pendaftaran";
 import Pengumuman from "./pages/MahasiswaPages/pengumuman";
 import DataUser from "./pages/LaboranPages/dataUser";
 import DataLaboran from "./pages/LaboranPages/dataLaboran";
@@ -31,7 +24,6 @@ import Status from "./pages/LaboranPages/validasiData/status";
 import Register from "./pages/auth/Register";
 import JadwalPraktikum from "./components/table/jadwal";
 import JadwalLab from "./pages/AslabPages/Jadwal";
-import checkLogin from "./utils/checkLogin";
 import Sertifikat from "./pages/AslabPages/Sertifikat/sertifikat";
 import Footer from "./components/footer";
 import NavMhs from "./components/NavigationBar/navMhs";
@@ -51,148 +43,7 @@ function App() {
   const location = useLocation();
   const isLogin = location.pathname === "/login";
 
-  // useEffect(() => {
-  //   const getRole = async () => {
-  //     try {
-  //       const response = await API().get(`v1/users`, {
-  //         headers: {
-  //           'Content-Type': 'application/json'
-  //         },
-  //         credentials: "include", // Mengaktifkan kredensial (cookies)
-  //       });
-  //       console.log(JSON.stringify(response?.data));
-  //       const role = response?.data?.role;
-  //       dispatch(setRole(role));
-  //       dispatch(setIsLogin(true));
-  //     } catch (err) {
-  //       console.log('Error fetching user profile:', err);
-  //     }
-  //   }
-  //   getRole();
-  // }, []);
-
-  {
-    /* // const Authorization = (WrappedComponent, allowedRoles) => {
-//   class WithAuthorization extends Component {
-//     render() {
-//       const userType  = this.props.userType;
-//       if (allowedRoles.includes(userType)) {
-//         return <WrappedComponent {...this.props} />;
-//       } else {
-//         return <h1>You are not allowed to view this page!</h1>;
-//       }
-//     }
-//   }
-//   const mapStateToProps = state => ({ user: state.login.userName, userType: state.login.userType })
-//   return connect(mapStateToProps)(WithAuthorization);
-// };
-
-// const AdminRoute = ({ component: Component, ...rest }) => {
-//   const userRole = useSelector((state) => state.user.role);
-//   return (
-//     <Route
-//       {...rest}
-//       render={(props) =>
-//         userRole === 'laboran' ? <Component {...props} /> : <Navigate to="/unauthorized" />
-//       }
-//     />
-//   );
-// };
-
-// const UserRoute = ({ component: Component, ...rest }) => {
-//   const userRole = useSelector((state) => state.user.role); // Ambil role pengguna dari state (Redux)
-
-//   // Pengecekan role dilakukan di komponen render (route render function)
-//   return (
-//     <Route
-//       {...rest}
-//       render={(props) =>
-//         userRole === 'mahasiswa' ? <Component {...props} /> : <Navigate to="/unauthorized" />
-//       }
-//     />
-//   );
-// };
-
-// const Unauthorized = () => {
-//   return <h3>Anda tidak diizinkan mengakses halaman ini!</h3>;
-// };
-
-// const getRole = () => {
-//   const role = JSON.parse(localStorage.getItem("role"));
-//   return role?.role;
-// };
-
-// const RoleAccess = ({ roles = [] }) => {
-//   const user = JSON.parse(getRole);
-//   return !roles.length || roles.includes(user?.role)
-//     ? <Outlet />
-//     : <Navigate to="/*" replace />;
-
-// const [userRole, setUserRole] = useState('');
-//   const [isLogin, setIsLogin] = useState(false);
-
-//   useEffect(() => {
-//     const getRole = async () => {
-//       try {
-//         const response = await axios.get(`v1/users`, {
-//           headers: {
-//             'Content-Type': 'application/json'
-//           },
-//           credentials: "include", // Mengaktifkan kredensial (cookies)
-//         });
-//         console.log(JSON.stringify(response?.data));
-//         const role = response?.data?.role;
-//         setUserRole(role);
-//         setIsLogin(true);
-//       } catch (err) {
-//           console.log('Error fetching user profile:', err);
-//       }
-//     }
-//     getRole();
-//   }, []); */
-  }
-
-  // useEffect(() => {
-  //   // Ambil token akses dari local storage (atau tempat penyimpanan lainnya)
-  //   const accessToken = localStorage.getItem("accessToken");
-
-  //   if (accessToken) {
-  //     // Dekode token akses untuk mendapatkan informasi role
-  //     // const decodedToken = decode(accessToken);
-  //     // const userRole = decodedToken.role;
-  //     const decodedToken = useJwt.decode(accessToken);
-  //     const userRole = decodedToken.role;
-  //     // Simpan role dalam state
-  //     setUserRole(userRole);
-  //     setIsLoading(false);
-  //   } else {
-  //     setIsLoading(false);
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   const fetchUserRole = async () => {
-  //     try {
-  //       const accessToken = localStorage.getItem("access_token");
-  //       const decodedToken = useJwt.decode(accessToken);
-  //       const userRole = decodedToken.role;
-  //       setUserRole(userRole);
-  //       console.log(decodedToken);
-  //       if (accessToken) {
-  //         const decodedToken = useJwt.decode(accessToken);
-  //         const userRole = decodedToken.role;
-  //         setUserRole(userRole);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching user role:", error);
-  //       // Handle the error, e.g., redirect to a login page or show an error message.
-  //     }
-  //     setIsLoading(false); // Setelah mendapatkan informasi role atau jika token tidak ada
-  //   };
-
-  //   fetchUserRole();
-  // }, []);
-
+ 
   const setLogout = () => {
     localStorage.clear();
     setAuthTokens(null);
@@ -200,7 +51,11 @@ function App() {
 
   const setTokens = (data) => {
     localStorage.setItem("accessToken", data);
+    localStorage.setItem("refresh_Token", data);
+    Cookies.set("accessToken", data);
+    Cookies.set("refreshToken", data);
     setAuthTokens(data);
+    console.log(data);
   };
 
   const dataContext = useMemo(
@@ -325,7 +180,7 @@ function App() {
           </Routes>
         )}
 
-        <footer id="footer">
+        <footer id="footer" className="sticky-bottom">
           <Footer />
         </footer>
       </AuthContext.Provider>

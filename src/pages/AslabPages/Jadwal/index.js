@@ -3,11 +3,17 @@ import Container from 'react-bootstrap/Container';
 import {PiPencilSimpleBold} from 'react-icons/pi';
 import {BiTrashAlt} from 'react-icons/bi';
 import { getJadwalApi } from '../../../api/jadwal/jadwalApi';
+import { getDosenApi, getKelasApi, getKrsApi, getMatkulApi } from "../../../api/SevimaData/SevimaApi";
 
 export default function JadwalLab () {
 
   const [jadwal, setJadwal] = useState();
-  
+
+  const dataToSend = {
+    periode_masuk : 20231
+  };
+
+
   const getJadwal = async () => {
     try {
       const result = await getJadwalApi();
@@ -17,8 +23,45 @@ export default function JadwalLab () {
     }
   };
 
+  const getKelas = async () => {
+    try {
+      const result = await getKelasApi();
+      setJadwal(result?.data?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getDosen = async () => {
+    try {
+      const result = await getDosenApi();
+      setJadwal(result?.data?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getKrs = async () => {
+    try {
+      const result = await getKrsApi();
+      setJadwal(result?.data?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getMatkul = async () => {
+    try {
+      const result = await getMatkulApi();
+      setJadwal(result?.data?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getJadwal();
+    getKelas();
+    getDosen();
+    getKrs();
+    getMatkul();
   }, []);
 
 
@@ -55,8 +98,10 @@ export default function JadwalLab () {
                     <td>{jdwl.jam_mulai}</td>
                     <td>{jdwl.jam_selesai}</td>
                     <td>{jdwl.kode_mk}</td>
-                    <td>{jdwl.nama_kelas}</td>
-                    <td>{jdwl.dosen_nip}</td>
+                    <td>{jdwl.Matkul.nama_mk}</td>
+                    <td>{jdwl.Matkul.sks_mk}</td>
+                    <td>{jdwl.kela.nama_kelas}</td>
+                    <td>{jdwl.Dosen.nama_dosen}</td>
                   </tr>
               ))}
           </tbody>

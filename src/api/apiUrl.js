@@ -1,9 +1,13 @@
 export const LOGIN_URL = "v1/auth/login";
-export const REGISTER_URL = "v1/auth/users/register";
+export const REGISTER_URL = "v1/users/register";
 export const USER_URL = "v1/users";
 export const LABORAN_URL = "v1/laborans";
 export const ASISTEN_URL = "v1/asistens";
 export const PROFILE_URL = "v1/profile";
 export const PENDAFTARAN_URL = "v1/pendaftaran";
-export const JADWAL_URL = "v1/jadwalpikets";
+export const JADWAL_URL = "v1/sevima/jadwalpraktikum";
 export const SEVIMA_USER_URL = "v1/sevima/mahasiswa";
+export const SEVIMA_DOSEN_URL = "v1/sevima/dosen";
+export const SEVIMA_KELAS_URL = "v1/sevima/kelas";
+export const SEVIMA_MATAKULIAH_URL = "v1/sevima/matakuliah";
+export const SEVIMA_KRS_URL = "v1/sevima/krs";
